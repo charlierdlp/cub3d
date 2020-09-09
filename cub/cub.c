@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/09/08 13:22:17 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/09/09 13:27:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 #include "./minilibx/mlx.h"
 #define SCREEN_HIGHT 500
 #define SCREEN_WIDTH 500
+
+int map [WIDTH][HEIGHT] =
+{
+    {1,1,1,1,1,1,1,1,1,1},
+    {1,0,0,0,0,0,0,0,0,1},
+    {1,0,5,0,0,0,0,0,0,1},
+    {1,0,0,1,1,0,1,0,0,1},
+    {1,0,0,1,0,0,1,0,0,1},
+    {1,0,0,1,0,0,1,0,0,1},
+    {1,0,0,1,0,1,1,0,0,1},
+    {1,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,1},
+    {1,1,1,1,1,1,1,1,1,1}
+}; 
 
 typedef struct s_player
 {   
@@ -32,17 +46,25 @@ typedef struct  s_vars {
         void    *win;
         int      x;
         int      y;
-        t_player    player;
         int raycount;
         int ray;
+        t_player    player;
+        t_walls     walls;
 }               t_vars;
+
+typedef struct s_walls
+{
+    int wall;
+    int distance;
+    int height;
+}               t_walls;
 
 int raycasting(t_vars *vars)
 {
     int raycos;
     int raysin;
     int rayangle;
-    int wall;
+    
 
     rayangle = vars->player.angle - vars->player.fov/2;
 
@@ -59,11 +81,19 @@ int raycasting(t_vars *vars)
         raysin = Math.sin(rayangle * (M_PI * 180));
 
         //wall check
-        wall = 0;
-        while(wall == 0)
+    
+        vars->walls.wall = 0;
+        while(vars->walls.wall == 0)
         {
+            vars->x += raycos;
+            vars->y += raysin;
+            vars->walls.wall = map[(int)vars->y][(int)vars->x];
 
         }
+
+        vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2) + pow(vars->player.y - vars->y, 2));
+
+        vars->walls.height = (int)((vars->walls.height/2) / vars->walls.distance);
 
 
         rayangle += vars->player.fov/SCREEN_WIDTH;
