@@ -1,4 +1,4 @@
-SRCS        = test.c
+SRCS        = cub.c
 OBJS        = ${SRCS:.c=.o}
 NAME        = cub3d
 CC          = cc

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 13:08:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/09/01 13:07:55 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/09/10 11:51:34 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int map [WIDTH][HEIGHT] =
     {1,0,0,0,0,0,0,0,0,1},
     {1,1,1,1,1,1,1,1,1,1}
 }; 
-
+/*
 void print_big(t_vars vars, int x, int y)
 {
  	int i;
@@ -46,11 +46,11 @@ void print_big(t_vars vars, int x, int y)
     unsigned int color;
 
     if(x == vars.x * 40 && y == vars.y * 40)
-        color = 0xffffff;
+        color = 0xfff0ff;
     else
         color = 0x0000ff;
     
-    printf("x: %d, y: %d\npx: %d py: %d\n", x, y, vars.x * 40, 40 * vars.y);
+    //printf("x: %d, y: %d\npx: %d py: %d\n", x, y, vars.x * 40, 40 * vars.y);
     
     i = 0;
 	while (i <= 40)
@@ -64,8 +64,8 @@ void print_big(t_vars vars, int x, int y)
 		i++;
 	}
 }
-
-void print_map(t_vars vars)
+/*
+int print_map(t_vars vars)
 {
     int i;
     int j;
@@ -80,12 +80,13 @@ void print_map(t_vars vars)
             {
                 print_big(vars, i*40, j*40);
             }
-            if (map[j][i] == 5)
-               print_big(vars, i*40, j*40);
+            else if (map[j][i] == 5)
+                print_big(vars, i*40, j*40);
             i++;
         }
         j++;
     }
+    return(0);
 }
 
 /*
@@ -99,27 +100,18 @@ typedef struct s_player
 };              t_player;
 */
 
-int             close_win(int keycode, t_vars *vars)
-{
-    
-    if (keycode == 53)
-    {
-        mlx_destroy_window(vars->mlx, vars->win);
-        exit(0);
-    }
-    return(0);
-}
-
 int move(int keycode, t_vars *vars)
 {
+    int i = 0;
+    int j = 0;
     if (keycode == 53)
     {
         mlx_destroy_window(vars->mlx, vars->win);
         exit(0);
     }
-    if(keycode == 123)
+    if(keycode == 123 && (map[i][j - 1] == 0 || map[i][j - 1] == 5))
         vars->x = vars->x-1; 
-    if(keycode == 124)
+    if(keycode == 124 && (map[i][j + 1] == 0 || map[i][j + 1] == 5))
         vars->x = vars->x+1;
     if(keycode == 126)
         vars->y = vars->y-1;
@@ -127,6 +119,7 @@ int move(int keycode, t_vars *vars)
         vars->y = vars->y+1;
 
     print_map(*vars);
+    return(0);
 }
 
 int main()
@@ -138,12 +131,11 @@ int main()
 
     y = 0;
     x = 0;
-    vars.x = 1;
-    vars.y = 1;
+    vars.x = 2;
+    vars.y = 2;
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, 1280, 1000, "Hello World");
     print_map(vars);
-    /*
     while(x < 800)
     {
         mlx_pixel_put(vars.mlx, vars.win, x, 0, 0xff0000);
@@ -156,8 +148,7 @@ int main()
         mlx_pixel_put(vars.mlx, vars.win, 800, y, 0xff0000);
         y++;
     }
-    */
-    mlx_hook(vars.win, 2, 1L<<0, move, &vars);
+    mlx_hook(vars.win, 2, 1L<0, move, &vars);
     mlx_loop_hook(vars.mlx, print_map, &vars);
     mlx_loop(vars.mlx);
     return(0);
