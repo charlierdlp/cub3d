@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/09/11 12:41:51 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/09/21 13:51:20 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include "./minilibx/mlx.h"
 #define WIDTH 10
 #define HEIGHT 10
-#define SCREEN_HIGHT 500
-#define SCREEN_WIDTH 500
+#define SCREEN_HEIGHT 1280
+#define SCREEN_WIDTH 1000
 
 int map [WIDTH][HEIGHT] =
 {
@@ -36,27 +36,27 @@ int map [WIDTH][HEIGHT] =
 
 typedef struct s_player
 {   
-    int x;
-    int y;
-    int fov;
-    int angle;
+    float x;
+    float y;
+    float fov;
+    float angle;
     
 }              t_player;
 
 typedef struct s_walls
 {
     int wall;
-    int distance;
-    int height;
+    float distance;
+    float height;
 }               t_walls;
 
 typedef struct  s_vars {
         void    *mlx;
         void    *win;
-        int      x;
-        int      y;
+        float      x;
+        float      y;
         int raycount;
-        int ray;
+        float ray;
         t_player    player;
         t_walls     walls;
 }               t_vars;
@@ -69,10 +69,38 @@ int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
         while(y1 < y2)
         {
             mlx_pixel_put(vars->mlx, vars->win, x2, y2, color);
-            y2++;
+            y1++;
         }
         x2++;
     }  
+}
+
+void dda_algorithm(t_vars *vars, int x0, int y0, int x1, int y1, int color)
+{
+    int x;
+    int y;
+    int dx;
+    int dy;
+    float steps;
+    int xinc;
+    int yinc;
+    int i;
+
+    i = 0;
+    dx = x1 - x0;
+    dy = y1 - y0;
+    steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    xinc = dx / steps;
+    yinc = dy / steps;
+    x = x0;
+    y = y0;
+    while(i < steps)
+    {
+        mlx_pixel_put(vars->mlx, vars->win, x, y, color);
+        x += xinc;
+        y += yinc;
+        i++;
+    }
 }
 
 int raycasting(t_vars *vars)
@@ -86,15 +114,14 @@ int raycasting(t_vars *vars)
 
     while(vars->raycount < SCREEN_WIDTH) //bucle para recorrer la pantalla y ver la posicion
     {
+      //  printf("%d\n", vars->raycount);
         vars->x = vars->player.x;
         vars->y = vars->player.y;
 
-        //incrementangle = Player FOV / Screen width;
-
         //degreetoradians = M_PI * 180;
 
-        raycos = cos(rayangle * (M_PI * 180));
-        raysin = sin(rayangle * (M_PI * 180));
+        raycos = cos(rayangle * (M_PI * 180)) / 128;
+        raysin = sin(rayangle * (M_PI * 180)) / 128;
 
         //wall check
     
@@ -104,18 +131,19 @@ int raycasting(t_vars *vars)
             vars->x += raycos;
             vars->y += raysin;
             vars->walls.wall = map[(int)vars->y][(int)vars->x];
-
         }
-
         vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2) + pow(vars->player.y - vars->y, 2));
+        vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
 
-        vars->walls.height = (int)((vars->walls.height/2) / vars->walls.distance);
+    printf("%f\n" , vars->walls.height);
+    //printf("%f\n", vars->raycount);
+       dda_algorithm(vars, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x0000ff);
+       //dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xff0000);
+       //dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0x00ff00);
 
-        printline(vars, vars->raycount, 0, vars->raycount, vars->walls.height/2 - vars->walls.height, 0x0000ff);
-        printline(vars, vars->raycount, vars->walls.height/2 - vars->walls.height, vars->raycount, vars->walls.height/2 + vars->walls.height, 0xff0000);
-        printline(vars, vars->raycount, vars->walls.height/2 + vars->walls.height, vars->raycount, vars->walls.height, 0x00ff00);
-
+        //incrementangle = Player FOV / Screen width;
         rayangle += vars->player.fov/SCREEN_WIDTH;
+        vars->raycount++;
     }
 
 }
@@ -151,14 +179,14 @@ int main()
     vars.player.y = 2;
     vars.raycount = 0;
 
-    printf("%d\n" ,vars.player.fov);
-    printf("%d\n", vars.player.angle);
-    printf("%d\n", vars.player.x);
-    printf("%d\n", vars.player.y);
-    printf("%d\n", vars.raycount)
+    /*printf("%f\n" ,vars.player.fov);
+    printf("%f\n", vars.player.angle);
+    printf("%f\n", vars.player.x);
+    printf("%f\n", vars.player.y);
+    printf("%f\n", vars.raycount);*/
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, 1280, 1000, "Hello World");
-   // mlx_hook(vars.win, 2, 1L<0, move, &vars);
+    mlx_hook(vars.win, 2, 1L<0, move, &vars);
     //mlx_loop_hook(vars.mlx, print_map, &vars)
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);
