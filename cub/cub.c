@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/09/21 13:51:20 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/09/24 12:50:18 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "./minilibx/mlx.h"
 #define WIDTH 10
 #define HEIGHT 10
-#define SCREEN_HEIGHT 1280
+#define SCREEN_HEIGHT 1000
 #define SCREEN_WIDTH 1000
 
 int map [WIDTH][HEIGHT] =
@@ -40,6 +40,10 @@ typedef struct s_player
     float y;
     float fov;
     float angle;
+    float cos;
+    float sin;
+    float speed;
+    float rotation;
     
 }              t_player;
 
@@ -60,7 +64,7 @@ typedef struct  s_vars {
         t_player    player;
         t_walls     walls;
 }               t_vars;
-
+/*
 int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
 {
     while(x1 < x2)
@@ -74,6 +78,7 @@ int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
         x2++;
     }  
 }
+*/
 
 void dda_algorithm(t_vars *vars, int x0, int y0, int x1, int y1, int color)
 {
@@ -81,20 +86,20 @@ void dda_algorithm(t_vars *vars, int x0, int y0, int x1, int y1, int color)
     int y;
     int dx;
     int dy;
-    float steps;
-    int xinc;
-    int yinc;
+    int steps;
+    float xinc;
+    float yinc;
     int i;
 
     i = 0;
     dx = x1 - x0;
     dy = y1 - y0;
     steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-    xinc = dx / steps;
-    yinc = dy / steps;
+    xinc = dx / (float)steps;
+    yinc = dy / (float)steps;
     x = x0;
     y = y0;
-    while(i < steps)
+    while(i <= steps)
     {
         mlx_pixel_put(vars->mlx, vars->win, x, y, color);
         x += xinc;
@@ -112,19 +117,18 @@ int raycasting(t_vars *vars)
 
     rayangle = vars->player.angle - vars->player.fov/2;
 
+    vars->raycount = 0;
     while(vars->raycount < SCREEN_WIDTH) //bucle para recorrer la pantalla y ver la posicion
     {
-      //  printf("%d\n", vars->raycount);
         vars->x = vars->player.x;
         vars->y = vars->player.y;
 
-        //degreetoradians = M_PI * 180;
+        //degreetoradians = * M_PI / 180;
 
-        raycos = cos(rayangle * (M_PI * 180)) / 128;
-        raysin = sin(rayangle * (M_PI * 180)) / 128;
+        raycos = cos(rayangle * M_PI / 180) / 128;
+        raysin = sin(rayangle * M_PI / 180) / 128;
 
         //wall check
-    
         vars->walls.wall = 0;
         while(vars->walls.wall == 0)
         {
@@ -132,39 +136,77 @@ int raycasting(t_vars *vars)
             vars->y += raysin;
             vars->walls.wall = map[(int)vars->y][(int)vars->x];
         }
+
+        //pythagoras
         vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2) + pow(vars->player.y - vars->y, 2));
+        //fish eye fix
+        vars->walls.distance = vars->walls.distance * cos((rayangle - vars->player.angle) * M_PI / 180);
+        
         vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
 
-    printf("%f\n" , vars->walls.height);
-    //printf("%f\n", vars->raycount);
-       dda_algorithm(vars, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x0000ff);
-       //dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xff0000);
-       //dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0x00ff00);
+        //print_screen
+       dda_algorithm(vars, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
+       dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xBB0000);
+       dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0xA0A0A0);
 
         //incrementangle = Player FOV / Screen width;
         rayangle += vars->player.fov/SCREEN_WIDTH;
         vars->raycount++;
     }
-
+    return(0);
 }
 
 int move(int keycode, t_vars *vars)
 {
-    int i = 0;
-    int j = 0;
     if (keycode == 53)
     {
         mlx_destroy_window(vars->mlx, vars->win);
         exit(0);
     }
-    if(keycode == 123 && (map[i][j - 1] == 0 || map[i][j - 1] == 5))
-        vars->x = vars->x-1; 
-    if(keycode == 124 && (map[i][j + 1] == 0 || map[i][j + 1] == 5))
-        vars->x = vars->x+1;
-    if(keycode == 126)
-        vars->y = vars->y-1;
-    if(keycode == 125)
-        vars->y = vars->y+1;
+    if(keycode == 123)
+        vars->player.angle -= vars->player.rotation;
+    if(keycode == 124)
+        vars->player.angle += vars->player.rotation;
+    if(keycode == 13) //W
+    {
+       vars->player.cos = cos(vars->player.angle * M_PI / 180) * vars->player.speed;
+       vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
+       if(map[(int)(vars->player.y + vars->player.sin)][(int)(vars->player.x + vars->player.cos)] == 0)
+       {
+       vars->player.x += vars->player.cos;
+       vars->player.y += vars->player.sin;
+       }
+    }
+    if(keycode == 1) //S
+    {
+       vars->player.cos = cos(vars->player.angle * M_PI / 180) * vars->player.speed;
+       vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
+       if(map[(int)(vars->player.y - vars->player.sin)][(int)(vars->player.x - vars->player.cos)] == 0)
+       {
+       vars->player.x -= vars->player.cos;
+       vars->player.y -= vars->player.sin;
+       }
+    }
+    if(keycode == 0) //A
+    {
+       vars->player.cos = cos((vars->player.angle + 90) * M_PI / 180) * vars->player.speed;
+       vars->player.sin = sin((vars->player.angle + 90) * M_PI / 180) * vars->player.speed;
+       if(map[(int)(vars->player.y - vars->player.sin)][(int)(vars->player.x - vars->player.cos)] == 0)
+       {
+       vars->player.x -= (vars->player.cos);
+       vars->player.y -= (vars->player.sin);
+       }
+    }
+    if(keycode == 2) //D
+    {
+       vars->player.cos = cos((vars->player.angle - 90) * M_PI / 180) * vars->player.speed;
+       vars->player.sin = sin((vars->player.angle - 90) * M_PI / 180) * vars->player.speed;
+       if(map[(int)(vars->player.y - vars->player.sin)][(int)(vars->player.x - vars->player.cos)] == 0)
+       {
+       vars->player.x -= (vars->player.cos);
+       vars->player.y -= (vars->player.sin);
+       }
+    }
 
     return(0);
 }
@@ -177,17 +219,12 @@ int main()
     vars.player.angle = 0;
     vars.player.x = 2;
     vars.player.y = 2;
-    vars.raycount = 0;
+    vars.player.speed = 0.2;
+    vars.player.rotation = 5;
 
-    /*printf("%f\n" ,vars.player.fov);
-    printf("%f\n", vars.player.angle);
-    printf("%f\n", vars.player.x);
-    printf("%f\n", vars.player.y);
-    printf("%f\n", vars.raycount);*/
     vars.mlx = mlx_init();
-    vars.win = mlx_new_window(vars.mlx, 1280, 1000, "Hello World");
+    vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
     mlx_hook(vars.win, 2, 1L<0, move, &vars);
-    //mlx_loop_hook(vars.mlx, print_map, &vars)
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);
 }
