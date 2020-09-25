@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/09/24 12:50:18 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/09/25 13:24:50 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ typedef struct s_player
     
 }              t_player;
 
+typedef struct  s_img {
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+}               t_img;
+
 typedef struct s_walls
 {
     int wall;
@@ -63,6 +71,7 @@ typedef struct  s_vars {
         float ray;
         t_player    player;
         t_walls     walls;
+        t_img       data;
 }               t_vars;
 /*
 int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
@@ -80,7 +89,16 @@ int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
 }
 */
 
-void dda_algorithm(t_vars *vars, int x0, int y0, int x1, int y1, int color)
+void    ch_mlx_pixel_put(t_img *data, int x, int y, int color)
+{
+    char *dst;
+
+    //recorrer el string de datos en forma de array
+    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
+void dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color)
 {
     int x;
     int y;
@@ -101,7 +119,7 @@ void dda_algorithm(t_vars *vars, int x0, int y0, int x1, int y1, int color)
     y = y0;
     while(i <= steps)
     {
-        mlx_pixel_put(vars->mlx, vars->win, x, y, color);
+        ch_mlx_pixel_put(data, x, y, color);
         x += xinc;
         y += yinc;
         i++;
@@ -145,14 +163,15 @@ int raycasting(t_vars *vars)
         vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
 
         //print_screen
-       dda_algorithm(vars, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
-       dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xBB0000);
-       dda_algorithm(vars, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0xA0A0A0);
+       dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
+       dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xBB0000);
+       dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0xA0A0A0);
 
         //incrementangle = Player FOV / Screen width;
         rayangle += vars->player.fov/SCREEN_WIDTH;
         vars->raycount++;
     }
+    mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
     return(0);
 }
 
@@ -224,6 +243,8 @@ int main()
 
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
+    vars.data.img = mlx_new_image(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+    vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
     mlx_hook(vars.win, 2, 1L<0, move, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);
