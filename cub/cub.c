@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/09/28 13:41:38 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/01 13:23:11 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,20 @@ int map [HEIGHT][WIDTH] =
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-}; 
+};
+
+int bitmap [8][8] = 
+{
+    {1,1,1,1,1,1,1,1},
+    {0,0,0,1,0,0,0,1},
+    {1,1,1,1,1,1,1,1},
+    {0,1,0,0,0,1,0,0},
+    {1,1,1,1,1,1,1,1},
+    {0,0,0,1,0,0,0,1},
+    {1,1,1,1,1,1,1,1},
+    {0,1,0,0,0,1,0,0}
+};
+            
 
 /*
 int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
@@ -42,60 +55,6 @@ int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
 }
 */
 
-int move(int keycode, t_vars *vars)
-{
-    if (keycode == 53)
-    {
-        mlx_destroy_window(vars->mlx, vars->win);
-        exit(0);
-    }
-    if(keycode == 123)
-        vars->player.angle -= vars->player.rotation;
-    if(keycode == 124)
-        vars->player.angle += vars->player.rotation;
-    if(keycode == 13) //W
-    {
-       vars->player.cos = cos(vars->player.angle * M_PI / 180) * vars->player.speed;
-       vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
-       if(map[(int)(vars->player.y + vars->player.sin)][(int)(vars->player.x + vars->player.cos)] == 0)
-       {
-       vars->player.x += vars->player.cos;
-       vars->player.y += vars->player.sin;
-       }
-    }
-    if(keycode == 1) //S
-    {
-       vars->player.cos = cos(vars->player.angle * M_PI / 180) * vars->player.speed;
-       vars->player.sin = sin(vars->player.angle * M_PI / 180) * vars->player.speed;
-       if(map[(int)(vars->player.y - vars->player.sin)][(int)(vars->player.x - vars->player.cos)] == 0)
-       {
-       vars->player.x -= vars->player.cos;
-       vars->player.y -= vars->player.sin;
-       }
-    }
-    if(keycode == 0) //A
-    {
-       vars->player.cos = cos((vars->player.angle + 90) * M_PI / 180) * vars->player.speed;
-       vars->player.sin = sin((vars->player.angle + 90) * M_PI / 180) * vars->player.speed;
-       if(map[(int)(vars->player.y - vars->player.sin)][(int)(vars->player.x - vars->player.cos)] == 0)
-       {
-       vars->player.x -= (vars->player.cos);
-       vars->player.y -= (vars->player.sin);
-       }
-    }
-    if(keycode == 2) //D
-    {
-       vars->player.cos = cos((vars->player.angle - 90) * M_PI / 180) * vars->player.speed;
-       vars->player.sin = sin((vars->player.angle - 90) * M_PI / 180) * vars->player.speed;
-       if(map[(int)(vars->player.y - vars->player.sin)][(int)(vars->player.x - vars->player.cos)] == 0)
-       {
-       vars->player.x -= (vars->player.cos);
-       vars->player.y -= (vars->player.sin);
-       }
-    }
-    return(0);
-}
-
 int main()
 {
     t_vars vars;
@@ -110,6 +69,8 @@ int main()
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
     vars.data.img = mlx_new_image(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+    mlx_xpm_file_to_image(vars.mlx, "pared.xpm", &vars.text.width, &vars.text.height);
+    vars.text.addr = mlx_get_data_addr(mlx_xpm_file_to_image(vars.mlx, "pared.xpm", &vars.text.width, &vars.text.height), &vars.text.bits_per_pixel, &vars.text.line_length, &vars.text.endian);
     vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
     mlx_hook(vars.win, 2, 1L<0, move, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);

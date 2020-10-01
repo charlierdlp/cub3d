@@ -1,4 +1,4 @@
-SRCS        = cub.c raycast.c
+SRCS        = cub.c raycast.c movement.c
 OBJS        = ${SRCS:.c=.o}
 NAME        = cub3d
 CC          = cc
