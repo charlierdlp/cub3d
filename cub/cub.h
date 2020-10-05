@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/01 13:20:50 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:40:45 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,17 @@ typedef struct  s_vars {
         float      x;
         float      y;
         int raycount;
+        int dir;
         float ray;
         t_player    player;
         t_walls     walls;
         t_img       data;
-        t_textdata  text;
+        t_textdata  texture;
+        t_textdata  north;
+        t_textdata  south;
+        t_textdata  west;
+        t_textdata  east;
+
 }               t_vars;
 
 
@@ -86,5 +92,6 @@ void    ch_mlx_pixel_put(t_img *data, int x, int y, int color);
 void dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color);
 int raycasting(t_vars *vars);
 int move(int keycode, t_vars *vars);
+int drawtexture(t_vars *vars, int x);
 
 #endif

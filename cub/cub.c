@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/01 13:23:11 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:52:46 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ int main()
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
     vars.data.img = mlx_new_image(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-    mlx_xpm_file_to_image(vars.mlx, "pared.xpm", &vars.text.width, &vars.text.height);
-    vars.text.addr = mlx_get_data_addr(mlx_xpm_file_to_image(vars.mlx, "pared.xpm", &vars.text.width, &vars.text.height), &vars.text.bits_per_pixel, &vars.text.line_length, &vars.text.endian);
-    vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
     mlx_hook(vars.win, 2, 1L<0, move, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/01 13:10:49 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/05 13:43:12 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    ch_mlx_pixel_put(t_img *data, int x, int y, int color)
     char *dst;
 
     //recorrer el string de datos en forma de array
-    if(x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || x < 0 || y < 0)
+    if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || x < 0 || y < 0)
         return ;
     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
@@ -42,7 +42,7 @@ void dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color)
     yinc = dy / (float)steps;
     x = x0;
     y = y0;
-    while(i <= steps)
+    while (i <= steps)
     {
         ch_mlx_pixel_put(data, x, y, color);
         x += xinc;
@@ -50,27 +50,6 @@ void dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color)
         i++;
     }
 }
-
-    int drawtexture(t_vars *vars, int x)
-    {
-        float yincrementer;
-        float y;
-        int i;
-
-        i = 0;
-        yincrementer = (vars->walls.height * 2) / vars->text.height; // 8 = textureheight
-        y = (SCREEN_HEIGHT/2) - vars->walls.height;
-
-        // x = raycount;
-        while(i < vars->text.height)
-        {
-            vars->text.color = ((unsigned int*)vars->text.addr)[i * vars->text.width + vars->text.texturepositionx];
-            dda_algorithm(&vars->data, x, y, x, (y + yincrementer), vars->text.color);
-            y += yincrementer;
-            i++;
-        }
-        return(0);
-    }
 
 int raycasting(t_vars *vars)
 {
@@ -82,7 +61,7 @@ int raycasting(t_vars *vars)
     rayangle = vars->player.angle - vars->player.fov/2;
 
     vars->raycount = 0;
-    while(vars->raycount < SCREEN_WIDTH) //bucle para recorrer la pantalla y ver la posicion
+    while (vars->raycount < SCREEN_WIDTH) //bucle para recorrer la pantalla y ver la posicion
     {
         vars->x = vars->player.x;
         vars->y = vars->player.y;
@@ -94,10 +73,26 @@ int raycasting(t_vars *vars)
 
         //wall check
         vars->walls.wall = 0;
-        while(vars->walls.wall == 0)
+        while (vars->walls.wall == 0)
         {
             vars->x += raycos;
+            if (map[(int)vars->y][(int)vars->x] == 1)
+            {
+                vars->dir = raycos < 0 ? 'W' : 'E';
+                if(vars->dir == 'W')
+                    vars->texture = vars->west;
+                else
+                    vars->texture = vars->east;
+            }
             vars->y += raysin;
+            if (map[(int)vars->y][(int)vars->x] == 1)
+            {
+                vars->dir = raycos < 0 ? 'N' : 'S';
+                if(vars->dir == 'N')
+                    vars->texture = vars->north;
+                else
+                    vars->texture = vars->south;
+            }
             vars->walls.wall = map[(int)vars->y][(int)vars->x];
         }
 
@@ -108,7 +103,7 @@ int raycasting(t_vars *vars)
         //wall height
         vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
         //texture position
-        vars->text.texturepositionx = floor(fmod( vars->text.width * (vars->x + vars->y), vars->text.width)); //texturewidth = 8
+        vars->texture.texturepositionx = floor(fmod( vars->texture.width * (vars->x + vars->y), vars->texture.width)); //texturewidth = 8
 
         //print_screen
         dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
