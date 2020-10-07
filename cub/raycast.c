@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/05 13:43:12 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/07 12:49:07 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int raycasting(t_vars *vars)
     float raycos;
     float raysin;
     float rayangle;
-    
-
+        
     rayangle = vars->player.angle - vars->player.fov/2;
 
     vars->raycount = 0;
@@ -83,11 +82,12 @@ int raycasting(t_vars *vars)
                     vars->texture = vars->west;
                 else
                     vars->texture = vars->east;
+                break ;
             }
             vars->y += raysin;
             if (map[(int)vars->y][(int)vars->x] == 1)
             {
-                vars->dir = raycos < 0 ? 'N' : 'S';
+                vars->dir = raysin < 0 ? 'N' : 'S';
                 if(vars->dir == 'N')
                     vars->texture = vars->north;
                 else
@@ -107,7 +107,7 @@ int raycasting(t_vars *vars)
 
         //print_screen
         dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
-       // dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xBB0000);
+        //dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xBB0000);
         drawtexture(vars, vars->raycount);
         dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0xA0A0A0);
 
@@ -116,7 +116,6 @@ int raycasting(t_vars *vars)
         vars->raycount++;
     }
     mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);        
-
     return(0);
 }
 

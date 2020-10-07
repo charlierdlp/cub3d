@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/05 13:40:45 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/07 12:09:31 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ void dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color);
 int raycasting(t_vars *vars);
 int move(int keycode, t_vars *vars);
 int drawtexture(t_vars *vars, int x);
+int textures(t_vars *vars, char *path, t_textdata *texture);
 
 #endif
