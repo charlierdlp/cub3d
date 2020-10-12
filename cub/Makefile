@@ -1,4 +1,4 @@
-SRCS        = cub.c raycast.c movement.c textures.c 
+SRCS        = cub.c raycast.c movement.c textures.c press_release.c
 OBJS        = ${SRCS:.c=.o}
 NAME        = cub3d
 CC          = cc

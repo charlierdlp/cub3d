@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/07 12:51:25 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/12 13:05:43 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ int main()
     vars.player.y = 2;
     vars.player.speed = 0.2;
     vars.player.rotation = 5;
+    vars.keys.w = 0;
+    vars.keys.a = 0;
+    vars.keys.d = 0;
+    vars.keys.s = 0;
+    vars.keys.left = 0;
+    vars.keys.right = 0;
 
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
@@ -74,7 +80,9 @@ int main()
     textures(&vars, "./text/wall2.xpm", &vars.south);
     textures(&vars, "./text/wall3.xpm", &vars.east);
     textures(&vars, "./text/wall4.xpm", &vars.west);
-    mlx_hook(vars.win, 2, 1L<0, move, &vars);
+    textures(&vars, "./text/mario.xpm", &vars.sprite.texture);
+    mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
+    mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);
 }
