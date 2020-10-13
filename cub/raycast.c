@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/12 12:58:28 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/13 13:40:32 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	raycasting(t_vars *vars)
 	float raycos;
 	float raysin;
 	float rayangle;
-	
+
 	rayangle = vars->player.angle - vars->player.fov/2;
 	vars->raycount = 0;
 	move(vars);
@@ -102,8 +102,7 @@ int	raycasting(t_vars *vars)
 		//wall height
 		vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
 		//texture position
-		vars->texture.texturepositionx = floor(fmod( vars->texture.width * (vars->x + vars->y), vars->texture.width)); //texturewidth = 8
-
+		vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width)); //texturewidth = 8
 		//print_screen
 		dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
 		//dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, vars->raycount, SCREEN_HEIGHT/2 + vars->walls.height, 0xBB0000);
@@ -114,7 +113,6 @@ int	raycasting(t_vars *vars)
 		vars->raycount++;
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
-	
-	return(0);
+	return (0);
 }
 

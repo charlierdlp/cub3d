@@ -6,13 +6,13 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:18:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/12 13:04:21 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/13 13:39:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int key_press(int keycode, t_vars *vars)
+int	key_press(int keycode, t_vars *vars)
 {
 	if (keycode == W)
 		vars->keys.w = 1;
@@ -26,18 +26,16 @@ int key_press(int keycode, t_vars *vars)
 		vars->keys.left = 1;
 	else if (keycode == RIGHT)
 		vars->keys.right = 1;
-	
-	return(0);
+	return (0);
 }
 
-int key_release(int keycode, t_vars *vars)
+int	key_release(int keycode, t_vars *vars)
 {
-
-    if (keycode == ESC)
-    {
-        mlx_destroy_window(vars->mlx, vars->win);
-        exit(0);
-    }
+	if (keycode == ESC)
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		exit(0);
+	}
 	else if (keycode == W)
 		vars->keys.w = 0;
 	else if (keycode == A)
@@ -50,6 +48,5 @@ int key_release(int keycode, t_vars *vars)
 		vars->keys.left = 0;
 	else if (keycode == RIGHT)
 		vars->keys.right = 0;
-
-	return(0);
+	return (0);
 }

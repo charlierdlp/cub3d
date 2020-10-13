@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 11:22:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/12 14:05:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/13 10:26:41 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		forward_backwards(t_vars *vars)
 	return (0);
 }
 
-int		left_right(t_vars *vars, int i)
+int		left_right(t_vars *vars)
 {
 	if (vars->keys.a == 1)
 	{

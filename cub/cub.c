@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/12 13:05:43 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/12 14:07:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int main()
     vars.player.angle = 0;
     vars.player.x = 2;
     vars.player.y = 2;
-    vars.player.speed = 0.2;
     vars.player.rotation = 5;
     vars.keys.w = 0;
     vars.keys.a = 0;
