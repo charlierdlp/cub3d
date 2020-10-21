@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/13 13:40:32 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/21 13:33:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	raycasting(t_vars *vars)
 		rayangle += vars->player.fov/SCREEN_WIDTH;
 		vars->raycount++;
 	}
+	calc_angles(vars);
+	draw_sprites(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
 	return (0);
 }

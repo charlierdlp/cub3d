@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/12 14:07:03 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/21 14:00:44 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int main()
 
     vars.player.fov = 60;
     vars.player.angle = 0;
-    vars.player.x = 2;
-    vars.player.y = 2;
+    vars.player.x = 3;
+    vars.player.y = 3;
     vars.player.rotation = 5;
     vars.keys.w = 0;
     vars.keys.a = 0;
@@ -79,7 +79,7 @@ int main()
     textures(&vars, "./text/wall2.xpm", &vars.south);
     textures(&vars, "./text/wall3.xpm", &vars.east);
     textures(&vars, "./text/wall4.xpm", &vars.west);
-    textures(&vars, "./text/mario.xpm", &vars.sprite.texture);
+    textures(&vars, "./text/wall4.xpm", &vars.sprite.texture);
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);

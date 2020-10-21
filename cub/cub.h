@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/13 13:47:50 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/21 13:56:56 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,13 @@ typedef struct	s_sprite
 	int			leftangle;
 	int			rightangle;
 	int			relative;
-	int			height;
-	int			width;
 	int			drawheight;
 	int			drawwidth;
 	int			pixels_per_degree;
-	int			distance;
-	float		x;
-	float		y;
+	float		distance;
+	int			x;
+	int			y;
+	float		position;
 	t_textdata	texture;
 }				t_sprite;
 
@@ -127,5 +126,8 @@ int		drawtexture(t_vars *vars, int x);
 int		textures(t_vars *vars, char *path, t_textdata *texture);
 int		key_press(int keycode, t_vars *vars);
 int		key_release(int keycode, t_vars *vars);
+int		calc_angles(t_vars *vars);
+void 	square(t_vars *vars, int x1, int y1, int x2, int y2);
+int	draw_sprites(t_vars *vars);
 
 #endif
