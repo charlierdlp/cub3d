@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/21 13:56:56 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/27 12:28:01 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ typedef struct	s_textdata {
 
 typedef struct	s_sprite
 {
-	int			leftangle;
-	int			rightangle;
-	int			relative;
-	int			drawheight;
-	int			drawwidth;
+	float		leftangle;
+	float		rightangle;
+	float		relative;
+	float		angle;
+	float		drawheight;
+	float		drawwidth;
 	int			pixels_per_degree;
 	float		distance;
 	int			x;
