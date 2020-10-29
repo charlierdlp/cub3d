@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/27 12:28:01 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/29 11:19:06 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define LEFT 123
 # define RIGHT 124
 # define ESC 53
+# define SPEED 0.1
 
 typedef struct	s_keys {
 	int			up;
@@ -88,11 +89,11 @@ typedef struct	s_sprite
 	float		angle;
 	float		drawheight;
 	float		drawwidth;
-	int			pixels_per_degree;
 	float		distance;
+	float		position;
+	int			pixels_per_degree;
 	int			x;
 	int			y;
-	float		position;
 	t_textdata	texture;
 }				t_sprite;
 

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/27 12:16:23 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/29 10:39:26 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main()
     textures(&vars, "./text/wall2.xpm", &vars.south);
     textures(&vars, "./text/wall3.xpm", &vars.east);
     textures(&vars, "./text/wall4.xpm", &vars.west);
-    textures(&vars, "./text/mario.xpm", &vars.sprite.texture);
+    textures(&vars, "./text/sprite_1.xpm", &vars.sprite.texture);
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);

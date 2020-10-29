@@ -6,12 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 11:22:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/13 10:26:41 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/29 13:48:51 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-#define SPEED 0.2
 
 float	torad(float degree)
 {
@@ -49,24 +48,24 @@ int		left_right(t_vars *vars)
 {
 	if (vars->keys.a == 1)
 	{
-		vars->player.cos = cos((torad(vars->player.angle + 90)) * SPEED);
-		vars->player.sin = sin((torad(vars->player.angle + 90)) * SPEED);
+		vars->player.cos = cos(torad(vars->player.angle - 90)) * SPEED;
+		vars->player.sin = sin(torad(vars->player.angle - 90)) * SPEED;
 		if (map[(int)(vars->player.y - vars->player.sin)]
 		[(int)(vars->player.x - vars->player.cos)] == 0)
 		{
-			vars->player.x -= (vars->player.cos);
-			vars->player.y -= (vars->player.sin);
+			vars->player.x += (vars->player.cos);
+			vars->player.y += (vars->player.sin);
 		}
 	}
-	if (vars->keys.d == 1)
+	else if (vars->keys.d == 1)
 	{
-		vars->player.cos = cos((torad(vars->player.angle - 90)) * SPEED);
-		vars->player.sin = sin((torad(vars->player.angle - 90)) * SPEED);
+		vars->player.cos = cos(torad(vars->player.angle + 90)) * SPEED;
+		vars->player.sin = sin(torad(vars->player.angle + 90)) * SPEED;
 		if (map[(int)(vars->player.y - vars->player.sin)]
 		[(int)(vars->player.x - vars->player.cos)] == 0)
 		{
-			vars->player.x -= (vars->player.cos);
-			vars->player.y -= (vars->player.sin);
+			vars->player.x += (vars->player.cos);
+			vars->player.y += (vars->player.sin);
 		}
 	}
 	return (0);
@@ -75,9 +74,17 @@ int		left_right(t_vars *vars)
 int		move(t_vars *vars)
 {
 	if (vars->keys.left == 1)
+	{	
 		vars->player.angle -= vars->player.rotation;
+		vars->player.angle = (vars->player.angle < 0 ) ?
+		vars->player.angle + 360 : vars->player.angle;
+	}
 	if (vars->keys.right == 1)
+	{
 		vars->player.angle += vars->player.rotation;
+		vars->player.angle = (vars->player.angle > 360 ) ?
+		vars->player.angle - 360 : vars->player.angle;
+	}
 	forward_backwards(vars);
 	left_right(vars);
 	return (0);
