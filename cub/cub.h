@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/29 11:19:06 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:05:46 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_walls
 {
 	int			wall;
 	float		distance;
+	float		*dist;
 	float		height;
 }				t_walls;
 
@@ -91,11 +92,19 @@ typedef struct	s_sprite
 	float		drawwidth;
 	float		distance;
 	float		position;
+	int			number;
 	int			pixels_per_degree;
 	int			x;
 	int			y;
 	t_textdata	texture;
 }				t_sprite;
+
+typedef struct	s_rays 
+{
+	float 		raycos;
+	float		raysin;
+	float		rayangle;
+}				t_rays;
 
 typedef struct	s_vars {
 	void		*mlx;
@@ -115,6 +124,7 @@ typedef struct	s_vars {
 	t_textdata	east;
 	t_sprite	sprite;
 	t_keys		keys;
+	t_rays		rays;
 }				t_vars;
 
 extern int map[HEIGHT][WIDTH];

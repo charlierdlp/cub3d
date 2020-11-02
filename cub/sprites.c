@@ -6,12 +6,12 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/29 14:01:41 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/02 14:14:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-/*
+
 void	find_sprites(t_vars *vars)
 {
 	int	i;
@@ -19,10 +19,12 @@ void	find_sprites(t_vars *vars)
 
 	i = 0;
 	j = 0;
+	vars->sprite.number = 0;
+	// alocar mapa y distancia a las paredes
 
 
 }
-*/
+
 int calc_angles(t_vars *vars)
 {
 	float xdist;
@@ -47,7 +49,8 @@ void square(t_vars *vars, int x1, int y1, int x2, int y2)
 {
 	while (x1 <= x2)
 	{
-		dda_algorithm(&vars->data, x1, y1, x1, y2, vars->sprite.texture.color);
+		if (vars->sprite.texture.color != 0 && vars->walls.dist[x1] > vars->sprite.distance)
+			dda_algorithm(&vars->data, x1, y1, x1, y2, vars->sprite.texture.color);
 		x1++;
 	}
 }
@@ -89,7 +92,7 @@ int	draw_sprites(t_vars *vars)
 	{
 		j = 0;
 		y = SCREEN_HEIGHT / 2 - vars->sprite.drawheight;
-		printf("y:%d\n", y);
+		//printf("y:%d\n", y);
 		while (j < vars->sprite.texture.height)
 		{
 			vars->sprite.texture.color = ((unsigned int*)vars->sprite.texture.addr)[j * vars->sprite.texture.width + i];

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 11:22:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/29 13:48:51 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/10/30 12:55:37 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int		left_right(t_vars *vars)
 	{
 		vars->player.cos = cos(torad(vars->player.angle - 90)) * SPEED;
 		vars->player.sin = sin(torad(vars->player.angle - 90)) * SPEED;
-		if (map[(int)(vars->player.y - vars->player.sin)]
-		[(int)(vars->player.x - vars->player.cos)] == 0)
+		if (map[(int)(vars->player.y + vars->player.sin)]
+		[(int)(vars->player.x + vars->player.cos)] == 0)
 		{
 			vars->player.x += (vars->player.cos);
 			vars->player.y += (vars->player.sin);
@@ -61,8 +61,8 @@ int		left_right(t_vars *vars)
 	{
 		vars->player.cos = cos(torad(vars->player.angle + 90)) * SPEED;
 		vars->player.sin = sin(torad(vars->player.angle + 90)) * SPEED;
-		if (map[(int)(vars->player.y - vars->player.sin)]
-		[(int)(vars->player.x - vars->player.cos)] == 0)
+		if (map[(int)(vars->player.y + vars->player.sin)]
+		[(int)(vars->player.x + vars->player.cos)] == 0)
 		{
 			vars->player.x += (vars->player.cos);
 			vars->player.y += (vars->player.sin);
