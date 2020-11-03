@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/02 14:05:46 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/03 12:56:11 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@
 # define ESC 53
 # define SPEED 0.1
 
-typedef struct	s_keys {
+typedef struct	s_map
+{
+	char		**map;
+	int			width;
+	int			height;
+}				t_map;
+
+typedef struct	s_keys
+{
 	int			up;
 	int			down;
 	int			left;
@@ -53,7 +61,8 @@ typedef struct	s_player
 	float		rotation;
 }				t_player;
 
-typedef struct	s_img {
+typedef struct	s_img
+{
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
@@ -69,7 +78,8 @@ typedef struct	s_walls
 	float		height;
 }				t_walls;
 
-typedef struct	s_textdata {
+typedef struct	s_textdata
+{
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
@@ -92,7 +102,6 @@ typedef struct	s_sprite
 	float		drawwidth;
 	float		distance;
 	float		position;
-	int			number;
 	int			pixels_per_degree;
 	int			x;
 	int			y;
@@ -106,14 +115,17 @@ typedef struct	s_rays
 	float		rayangle;
 }				t_rays;
 
-typedef struct	s_vars {
+typedef struct	s_vars
+{
 	void		*mlx;
 	void		*win;
 	float		x;
 	float		y;
+	float		ray;
 	int			raycount;
 	int			dir;
-	float		ray;
+	int			snumber;
+	t_map		map;
 	t_player	player;
 	t_walls		walls;
 	t_img		data;
@@ -122,7 +134,7 @@ typedef struct	s_vars {
 	t_textdata	south;
 	t_textdata	west;
 	t_textdata	east;
-	t_sprite	sprite;
+	t_sprite	*sprite;
 	t_keys		keys;
 	t_rays		rays;
 }				t_vars;
@@ -138,8 +150,11 @@ int		drawtexture(t_vars *vars, int x);
 int		textures(t_vars *vars, char *path, t_textdata *texture);
 int		key_press(int keycode, t_vars *vars);
 int		key_release(int keycode, t_vars *vars);
-int		calc_angles(t_vars *vars);
-void 	square(t_vars *vars, int x1, int y1, int x2, int y2);
-int	draw_sprites(t_vars *vars);
+int		calc_angles(t_vars *vars, t_sprite *sprite);
+void 	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2);
+int		draw_sprites(t_vars *vars, t_sprite *sprite);
+void	find_sprites(t_vars *vars);
+int 	sprite_array(t_vars *vars);
+
 
 #endif

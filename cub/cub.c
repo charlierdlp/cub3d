@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/29 10:39:26 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/03 13:27:56 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int map [HEIGHT][WIDTH] =
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,2,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,1,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -37,23 +37,6 @@ int bitmap [8][8] =
     {1,1,1,1,1,1,1,1},
     {0,1,0,0,0,1,0,0}
 };
-            
-
-/*
-int printline(t_vars *vars, int x1, int y1, int x2, int y2, int color)
-{
-    while(x1 < x2)
-    {
-        mlx_pixel_put(vars->mlx, vars->win, x1, y1, color);
-        while(y1 < y2)
-        {
-            mlx_pixel_put(vars->mlx, vars->win, x2, y2, color);
-            y1++;
-        }
-        x2++;
-    }  
-}
-*/
 
 int main()
 {
@@ -79,7 +62,8 @@ int main()
     textures(&vars, "./text/wall2.xpm", &vars.south);
     textures(&vars, "./text/wall3.xpm", &vars.east);
     textures(&vars, "./text/wall4.xpm", &vars.west);
-    textures(&vars, "./text/sprite_1.xpm", &vars.sprite.texture);
+    sprite_array(&vars);
+    textures(&vars, "./text/sprite_1.xpm", &vars.sprite[0].texture);
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);
