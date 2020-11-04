@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/03 14:00:03 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/04 14:06:23 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		mapalloc(t_vars *vars)
 
 }
 */
-
 
 void	find_sprites(t_vars *vars)
 {
@@ -78,8 +77,9 @@ int 	sprite_array(t_vars *vars)
 		{
 			if (map[i][j] == 2)
 			{
-				vars->sprite[k].x = j;
-				vars->sprite[k].y =	i;
+				vars->sprite[k].x = j + 0.5;
+				vars->sprite[k].y =	i + 0.5;
+				k++;
 			}
 			j++;
 		}
@@ -87,7 +87,7 @@ int 	sprite_array(t_vars *vars)
 	}
 	if (!(vars->walls.dist = malloc(SCREEN_WIDTH * sizeof(float))))
 		return(0);
-	return(0);
+	return(1);
 }
 
 int		calc_angles(t_vars *vars, t_sprite *sprite)
@@ -116,7 +116,7 @@ void	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2)
 
 	while (x1 <= x2)
 	{
-		//if (sprite->texture.color != 0 && vars->walls.dist[x1] > sprite->distance)
+		if (sprite->texture.color != 0 && vars->walls.dist[x1] > sprite->distance)
 			dda_algorithm(&vars->data, x1, y1, x1, y2, sprite->texture.color);
 		x1++;
 	}
@@ -126,8 +126,8 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite)
 {
 	float	x_inc;
 	float	y_inc;
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 	int		i;
 	int		j;
 

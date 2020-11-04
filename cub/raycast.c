@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/03 13:38:41 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/04 14:14:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	raycasting(t_vars *vars)
 		vars->x = vars->player.x;
 		vars->y = vars->player.y;
 
-		//degreetoradians = * M_PI / 180;
 		vars->rays.raycos = cos(vars->rays.rayangle * M_PI / 180) / 128;
 		vars->rays.raysin = sin(vars->rays.rayangle * M_PI / 180) / 128;
 
@@ -117,8 +116,8 @@ int	raycasting(t_vars *vars)
 		vars->rays.rayangle += vars->player.fov/SCREEN_WIDTH;
 		vars->raycount += 1;
 	}
-	calc_angles(vars, &vars->sprite[0]);
-	draw_sprites(vars, &vars->sprite[0]);
+	calc_angles(vars, &vars->sprite[vars->snumber]);
+	draw_sprites(vars, &vars->sprite[vars->snumber]);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/03 12:56:11 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/04 13:36:01 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ typedef struct	s_sprite
 	float		drawwidth;
 	float		distance;
 	float		position;
-	int			pixels_per_degree;
-	int			x;
-	int			y;
+	float		pixels_per_degree;
+	float		x;
+	float		y;
 	t_textdata	texture;
 }				t_sprite;
 
