@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/04 14:14:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/05 13:13:21 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	wall_dist_height(t_vars *vars)
 	vars->walls.dist[vars->raycount] = vars->walls.distance;
 	vars->walls.distance = vars->walls.distance * cos((vars->rays.rayangle - vars->player.angle) * M_PI / 180);
 	vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
-	vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width));
-			
+	vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width));			
 }
 
 void 	paint(t_vars *vars)
@@ -96,6 +95,27 @@ void 	paint(t_vars *vars)
 	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
 	drawtexture(vars, vars->raycount);
 	dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0xA0A0A0);
+}
+
+void	init_sprites(t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (i < vars->snumber)
+	{
+		calc_angles(vars, &vars->sprite[i]);
+		i++;
+	}
+	i = 0;
+	while (i < vars->snumber)
+	{
+		draw_sprites(vars, &vars->sprite[i]);
+		//printf("x: %f\n",vars->sprite[i].x);
+		//printf("y: %f\n",vars->sprite[i].y);
+		//printf("i: %d\n", i);
+		i++;
+	}
 }
 
 int	raycasting(t_vars *vars)
@@ -116,8 +136,9 @@ int	raycasting(t_vars *vars)
 		vars->rays.rayangle += vars->player.fov/SCREEN_WIDTH;
 		vars->raycount += 1;
 	}
-	calc_angles(vars, &vars->sprite[vars->snumber]);
-	draw_sprites(vars, &vars->sprite[vars->snumber]);
+	//calc_angles(vars, &vars->sprite[vars->snumber]);
+	//draw_sprites(vars, &vars->sprite[vars->snumber]);
+	init_sprites(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
 	return (0);
 }

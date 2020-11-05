@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/04 14:06:13 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/05 14:02:02 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int map [HEIGHT][WIDTH] =
 {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,2,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,2,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,1,0,0,0,0,0,2,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,2,0,1},
+    {1,0,0,0,0,0,1,0,0,0,0,2,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,2,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
@@ -63,9 +63,10 @@ int main()
     textures(&vars, "./text/wall3.xpm", &vars.east);
     textures(&vars, "./text/wall4.xpm", &vars.west);
     sprite_array(&vars);
-    textures(&vars, "./text/sprite_1.xpm", &vars.sprite[0].texture);
+    textures(&vars, "./text/mario.xpm", &vars.stexture);
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
+    mlx_hook(vars.win, 17, 1L<0, x_close, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);
 }

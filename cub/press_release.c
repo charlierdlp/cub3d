@@ -6,11 +6,19 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:18:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/10/13 13:39:03 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/05 13:56:43 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+
+int	x_close(t_vars *vars)
+{
+	mlx_destroy_image(vars->mlx, vars->data.img);
+	mlx_destroy_window(vars->mlx, vars->win);
+	exit(0);
+}
 
 int	key_press(int keycode, t_vars *vars)
 {
@@ -33,6 +41,7 @@ int	key_release(int keycode, t_vars *vars)
 {
 	if (keycode == ESC)
 	{
+		mlx_destroy_image(vars->mlx, vars->data.img);
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
 	}

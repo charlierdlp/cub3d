@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/04 13:36:01 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/05 13:58:02 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,13 @@ typedef struct	s_vars
 	t_textdata	south;
 	t_textdata	west;
 	t_textdata	east;
+	t_textdata	stexture;
 	t_sprite	*sprite;
 	t_keys		keys;
 	t_rays		rays;
 }				t_vars;
 
 extern int map[HEIGHT][WIDTH];
-extern int bitmap[8][8];
 
 void	ch_mlx_pixel_put(t_img *data, int x, int y, int color);
 void	dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color);
@@ -150,6 +150,7 @@ int		drawtexture(t_vars *vars, int x);
 int		textures(t_vars *vars, char *path, t_textdata *texture);
 int		key_press(int keycode, t_vars *vars);
 int		key_release(int keycode, t_vars *vars);
+int		x_close(t_vars *vars);
 int		calc_angles(t_vars *vars, t_sprite *sprite);
 void 	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2);
 int		draw_sprites(t_vars *vars, t_sprite *sprite);
