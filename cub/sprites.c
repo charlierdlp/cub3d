@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/05 14:00:30 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/09 13:25:12 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,30 @@ int 	sprite_array(t_vars *vars)
 	return(1);
 }
 
+void	sort_sarray(t_vars *vars)
+{
+	int			i;
+	int			j;
+	t_sprite 	tmp;
+
+	i = 0;
+	while(i < vars->snumber)
+	{
+		j = 0;
+		while(j < vars->snumber)
+		{
+			if(vars->sprite[j].distance < vars->sprite[i].distance)
+			{
+				tmp = vars->sprite[j];
+				vars->sprite[j] = vars->sprite[i];
+				vars->sprite[i] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 int		calc_angles(t_vars *vars, t_sprite *sprite)
 {
 	float xdist;
@@ -112,8 +136,6 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 
 void	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2)
 {
-	//printf("x1: %d, y1: %d\nx2: %d, y2: %d\n\n", x1, y1, x2, y2);
-
 	while (x1 <= x2)
 	{
 		if (vars->stexture.color != 0xFFFFFF && vars->walls.dist[x1] > sprite->distance)
@@ -137,28 +159,10 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite)
 	x = sprite->position - sprite->drawwidth;
 	x_inc = (sprite->drawwidth * 2) / vars->stexture.width;
 	y_inc = (sprite->drawheight * 2) / vars->stexture.height;
-
-	//printf("xinc: %f\n", x_inc);
-	//printf("yinc: %f\n\n", y_inc);
-	//printf("====\n");	
-	//printf("drawwidth: %f\n", sprite->drawwidth);
-	//printf("drawhight: %f\n", sprite->drawheight);
-	//printf("====\n");
-	//printf("width: %d\n",sprite->texture.width);
-	//printf("height: %d\n",sprite->texture.height);
-	//printf("====\n");
-	//printf("position: %f\n",sprite->position);
-	//printf("relative: %f\n",sprite->relative);
-	//printf("leftanle:%f\n", sprite->leftangle);
-	//printf("distamce: %f\n", sprite->distance);
-	//printf("x: %f\n", x);
-	//y = (SCREEN_HEIGHT / 2) - sprite->drawheight;
-	//printf("y:%f\n\n", y);
 	while (i < vars->stexture.width)
 	{
 		j = 0;
 		y = SCREEN_HEIGHT / 2 - sprite->drawheight;
-		//printf("y:%d\n", y);
 		while (j < vars->stexture.height)
 		{
 			vars->stexture.color = ((unsigned int*)vars->stexture.addr)[j * vars->stexture.width + i];

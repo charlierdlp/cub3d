@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 10:08:45 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/03 13:20:18 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/09 12:06:10 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	textures(t_vars *vars, char *path, t_textdata *texture)
 	&texture->line_length, &texture->endian);
 	return (0);
 }
-//funcion que coja los addreses de las texturas
+
 int	drawtexture(t_vars *vars, int x)
 {
 	float	yincrementer;
@@ -30,7 +30,6 @@ int	drawtexture(t_vars *vars, int x)
 	i = 0;
 	yincrementer = (vars->walls.height * 2) / vars->texture.height;
 	y = (SCREEN_HEIGHT / 2) - vars->walls.height;
-	// x = raycount;
 	while (i < vars->texture.height)
 	{
 		vars->texture.color = ((unsigned int*)vars->texture.addr)

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/05 13:58:02 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/09 13:50:48 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "./minilibx/mlx.h"
+# include <signal.h>
+# include "pthread.h"
 # define WIDTH 15
-# define HEIGHT 10
+# define HEIGHT 15
 # define SCREEN_HEIGHT 600
 # define SCREEN_WIDTH 600
 # define W 13
@@ -125,6 +127,7 @@ typedef struct	s_vars
 	int			raycount;
 	int			dir;
 	int			snumber;
+    int			pid; 
 	t_map		map;
 	t_player	player;
 	t_walls		walls;
@@ -156,6 +159,7 @@ void 	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2);
 int		draw_sprites(t_vars *vars, t_sprite *sprite);
 void	find_sprites(t_vars *vars);
 int 	sprite_array(t_vars *vars);
+void	sort_sarray(t_vars *vars);
 
 
 #endif

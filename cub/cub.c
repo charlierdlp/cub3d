@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/05 14:02:02 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/09 14:00:53 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,30 @@ int map [HEIGHT][WIDTH] =
 {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,2,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,1,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,2,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,1,0,0,0,0,2,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int bitmap [8][8] = 
+void    *ft_play_music(t_vars *vars)
 {
-    {1,1,1,1,1,1,1,1},
-    {0,0,0,1,0,0,0,1},
-    {1,1,1,1,1,1,1,1},
-    {0,1,0,0,0,1,0,0},
-    {1,1,1,1,1,1,1,1},
-    {0,0,0,1,0,0,0,1},
-    {1,1,1,1,1,1,1,1},
-    {0,1,0,0,0,1,0,0}
-};
+    if (vars->pid == 0)
+    {
+        system("afplay ./music/theme.mp3");
+        wait(NULL);
+    }
+    return NULL;
+}
 
 int main()
 {
@@ -53,17 +56,19 @@ int main()
     vars.keys.s = 0;
     vars.keys.left = 0;
     vars.keys.right = 0;
+    vars.pid = fork();
+    //ft_play_music(&vars);
 
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
     vars.data.img = mlx_new_image(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
     vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
-    textures(&vars, "./text/wall1.xpm", &vars.north);
-    textures(&vars, "./text/wall2.xpm", &vars.south);
-    textures(&vars, "./text/wall3.xpm", &vars.east);
-    textures(&vars, "./text/wall4.xpm", &vars.west);
+    textures(&vars, "./text/brick1.xpm", &vars.north);
+    textures(&vars, "./text/brick2.xpm", &vars.south);
+    textures(&vars, "./text/brick3.xpm", &vars.east);
+    textures(&vars, "./text/brick4.xpm", &vars.west);
     sprite_array(&vars);
-    textures(&vars, "./text/mario.xpm", &vars.stexture);
+    textures(&vars, "./text/8bit.xpm", &vars.stexture);
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_hook(vars.win, 17, 1L<0, x_close, &vars);

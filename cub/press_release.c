@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:18:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/05 13:56:43 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/09 13:58:55 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	key_release(int keycode, t_vars *vars)
 	{
 		mlx_destroy_image(vars->mlx, vars->data.img);
 		mlx_destroy_window(vars->mlx, vars->win);
+		kill(vars->pid, SIGTERM);
 		exit(0);
 	}
 	else if (keycode == W)

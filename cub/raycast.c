@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/05 13:13:21 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/09 11:35:57 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	init_sprites(t_vars *vars)
 		calc_angles(vars, &vars->sprite[i]);
 		i++;
 	}
+	sort_sarray(vars);
 	i = 0;
 	while (i < vars->snumber)
 	{
