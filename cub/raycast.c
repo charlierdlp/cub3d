@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/09 11:35:57 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/10 12:02:34 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ch_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char *dst;
 
-	//recorrer el string de datos en forma de array
 	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || x < 0 || y < 0)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
@@ -112,9 +111,6 @@ void	init_sprites(t_vars *vars)
 	while (i < vars->snumber)
 	{
 		draw_sprites(vars, &vars->sprite[i]);
-		//printf("x: %f\n",vars->sprite[i].x);
-		//printf("y: %f\n",vars->sprite[i].y);
-		//printf("i: %d\n", i);
 		i++;
 	}
 }
