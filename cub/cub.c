@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/10 12:51:58 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/11 11:11:46 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,26 @@ void	playtrack(char *track)
 	execvp(args[0], args);
 }
 
+void    init_vars(t_vars *vars)
+{
+    vars->player.fov = 60;
+    vars->player.angle = 0;
+    vars->player.x = 3;
+    vars->player.y = 3;
+    vars->player.rotation = 5;
+    vars->keys.w = 0;
+    vars->keys.a = 0;
+    vars->keys.d = 0;
+    vars->keys.s = 0;
+    vars->keys.left = 0;
+    vars->keys.right = 0;
+}
+
 int main()
 {
     t_vars vars;
 
-    vars.player.fov = 60;
-    vars.player.angle = 0;
-    vars.player.x = 3;
-    vars.player.y = 3;
-    vars.player.rotation = 5;
-    vars.keys.w = 0;
-    vars.keys.a = 0;
-    vars.keys.d = 0;
-    vars.keys.s = 0;
-    vars.keys.left = 0;
-    vars.keys.right = 0;
-
+    init_vars(&vars);
     vars.mlx = mlx_init();
     vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
     vars.data.img = mlx_new_image(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);

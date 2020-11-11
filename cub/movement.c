@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 11:22:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/09 13:43:07 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/11 11:09:10 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ int		left_right(t_vars *vars)
 int		move(t_vars *vars)
 {
 	if (vars->keys.left == 1)
-	{	
+	{
 		vars->player.angle -= vars->player.rotation;
-		vars->player.angle = (vars->player.angle < 0 ) ?
+		vars->player.angle = (vars->player.angle < 0) ?
 		vars->player.angle + 360 : vars->player.angle;
 	}
 	if (vars->keys.right == 1)
 	{
 		vars->player.angle += vars->player.rotation;
-		vars->player.angle = (vars->player.angle > 360 ) ?
+		vars->player.angle = (vars->player.angle > 360) ?
 		vars->player.angle - 360 : vars->player.angle;
 	}
 	forward_backwards(vars);

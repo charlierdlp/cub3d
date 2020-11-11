@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/09 13:50:48 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/11 13:55:34 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include "./minilibx/mlx.h"
+# include <fcntl.h>
 # include <signal.h>
 # include "pthread.h"
+# include "./minilibx/mlx.h"
 # define WIDTH 15
 # define HEIGHT 15
 # define SCREEN_HEIGHT 600
@@ -31,6 +32,13 @@
 # define RIGHT 124
 # define ESC 53
 # define SPEED 0.1
+
+typedef struct	s_parser
+{
+	int			width;
+	int			height;
+	char		*
+}				t_parser;
 
 typedef struct	s_map
 {
@@ -141,6 +149,8 @@ typedef struct	s_vars
 	t_sprite	*sprite;
 	t_keys		keys;
 	t_rays		rays;
+	t_parser	parser;
+
 }				t_vars;
 
 extern int map[HEIGHT][WIDTH];
