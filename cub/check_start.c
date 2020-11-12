@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/11 13:55:32 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/12 13:15:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int     empty_line(char *str)
 	return (1);
 }
 
-void    check_text(char *str)
+int    check_text(t_vars *vars, char *str, int type)
 {
     int i;
     
@@ -37,31 +37,23 @@ void    check_text(char *str)
 	    i++;
     if (!ft_isascii(str[i]))
 	    return (0);
+    save_path(vars, type, str);
+    
 }
 
-void    resolution(t_vars *vars, char *str)
+int     save_path(t_vars *vars, int type, char *str)
 {
-    int i;
-
-    i = 0;
-    while(ft_isspace(str[i]))
-        i++;
-	if (!ft_isdigit(str[i]))
-		return (0);
-    while(ft_isspace(str[i]))
-        i++;
-    if(ft_isdigit(str[i]))
-        vars->parser.width = ft_atoi(&str[i]);
-    while(ft_isspace(str[i]))
-        i++;
-    if(ft_isdigit(str[i]))
-        vars->parser.height = ft_atoi(&str[i]);
-    if(!empty_line(&str[i]))
-    {
-        write(1, "Error\n Wrong Resolution", 24);
-        exit(0);
-    }
-    return(1);
+    if (type == 1)
+		vars->north.path = ft_strtrim(str, " ");
+	else if (type == 2)
+		vars->south.path = ft_strtrim(str, " ");
+	else if (type == 3)
+		vars->east.path = ft_strtrim(str, " ");
+	else if (type == 4)
+		vars->west.path = ft_strtrim(str, " ");
+	else
+		vars->stexture.path = ft_strtrim(str, " ");
+	return (1);
 }
 
 void        init_textures(t_vars *vars, char *str);
@@ -73,23 +65,27 @@ void        init_textures(t_vars *vars, char *str);
         write(1, "Error\n Wrong Texture");
         exit(0);
     }
-    
+    texture->img = mlx_xpm_file_to_image(vars->mlx, path,
+	&texture->width, &texture->height);
+    if(!(texture->img))
+    {
+        write(1, "Error\n Wrong img" , 17);
+        return(0);
+    }
+    texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+	&texture->line_length, &texture->endian);
+	return (1);
 }
+
 
 void        parse_textures(t_vars *vars, char *str, int type)
 {
     int i;
 
     i = 0;
-    if(type == 1)
-    {
-        check_text(&str[i]);
 
-        
-    }
-
-
-
+    check_text(vars, &str[i], type);
+    init_textures(vars, str);
 }
 
 int find_text(t_vars *vars, char *str)
@@ -98,13 +94,17 @@ int find_text(t_vars *vars, char *str)
 
     i = 0;
     if (str[i] == 'N' && str[i + 1] == 'O')
-        textures(vars, str, 1);
+        parse_textures(vars, str, 1);
     else if (str[i] == 'S' && str[i + 1] == 'O')
+        parse_textures(vars, str, 2);
     else if (str[i] == 'W' && str[i + 1] == 'E')
+        parse_textures(vars, str, 3);
     else if (str[i] == 'E' && str[i + 1] == 'A')
+        parse_textures(vars, str, 4);
     else if (str[i] == 'S')
+        parse_textures(vars, str, 5);
     else if (str[i] == 'R')
-        resolution(vars, str);
+        resolution(vars, str, 6);
 
     return(0);
 }

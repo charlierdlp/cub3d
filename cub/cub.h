@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/11 13:55:34 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/12 12:12:41 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct	s_parser
 {
 	int			width;
 	int			height;
-	char		*
 }				t_parser;
 
 typedef struct	s_map
@@ -92,6 +91,7 @@ typedef struct	s_textdata
 {
 	void		*img;
 	char		*addr;
+	char		*path;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
