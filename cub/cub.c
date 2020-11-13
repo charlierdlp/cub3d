@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/11 11:11:46 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/13 13:23:55 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void    init_vars(t_vars *vars)
     vars->keys.s = 0;
     vars->keys.left = 0;
     vars->keys.right = 0;
+    vars->map.width = 0;
 }
 
 int main()

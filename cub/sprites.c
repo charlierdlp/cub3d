@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/09 13:25:12 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/13 13:41:50 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	find_sprites(t_vars *vars)
 	i = 0;
 	j = 0;
 	vars->snumber = 0;
-	while (i < HEIGHT)
+	while (i < vars->map.height)
 	{
 		j = 0;
-		while (j < WIDTH)
+		while (j < vars->map.width)
 		{
 			if(map[i][j] == 2)
 				vars->snumber++;
