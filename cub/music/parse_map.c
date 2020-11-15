@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/13 14:06:23 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/15 12:16:36 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int     start_map(t_vars *vars, int fd)
         if (vars->map.width < length)
             vars->map.width = length;
         vars->map.height++;
+        free(line);
 	}
 }
 
@@ -52,13 +53,18 @@ int		mapalloc(t_vars *vars)
 
 int		recheck_map(t_vars *vars, char *line, int i)
 {
-	int	i;
+	int	j;
 
-	i = 0;
+	j = 0;
 	while (line[i] != '\0')
 	{
 		if (!ft_strchr("012NESW ", line[i]))
 			return (0);
+        if (line[j] == ' ')
+			vars->map.map[i][j] = '0';
+    	else
+			vars->map.map[i][j] = line[j];
+		j++;
 	}
 	return (1);
 }

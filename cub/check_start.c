@@ -6,25 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/12 13:15:03 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/15 12:28:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-int     empty_line(char *str)
-{
-    int i;
-
-    i = 0;
-	while (str[i] != '\0')
-	{
-		if (!ft_isspace(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int    check_text(t_vars *vars, char *str, int type)
 {
@@ -56,7 +42,7 @@ int     save_path(t_vars *vars, int type, char *str)
 	return (1);
 }
 
-void        init_textures(t_vars *vars, char *str);
+int     init_textures(t_vars *vars, char *str);
 {
     int fd;
 
@@ -116,6 +102,7 @@ int     read_file(t_vars *vars, int fd)
     while((i = get_next_line(fd, &line)) > 0)
     {
         find_text(vars, line);
+        free(line);
     }
     return(0);
 }
