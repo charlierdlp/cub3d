@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/13 12:51:24 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/16 12:15:31 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # define RIGHT 124
 # define ESC 53
 # define SPEED 0.1
+
+typedef struct s_colour
+{
+	int 		red;
+	int			green;
+	int			blue;
+}				t_colour;
 
 typedef struct	s_parser
 {
@@ -92,6 +99,8 @@ typedef struct	s_textdata
 	void		*img;
 	char		*addr;
 	char		*path;
+	int			sky[3];
+	int			floor[3];
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;

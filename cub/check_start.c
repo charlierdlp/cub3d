@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/15 12:28:03 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/16 13:12:00 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,20 @@ int    check_text(t_vars *vars, char *str, int type)
 
 int     save_path(t_vars *vars, int type, char *str)
 {
-    if (type == 1)
+    if (type == 1 && vars->north.path != '\0')
 		vars->north.path = ft_strtrim(str, " ");
-	else if (type == 2)
+	else if (type == 2 && vars->south.path != '\0')
 		vars->south.path = ft_strtrim(str, " ");
-	else if (type == 3)
+	else if (type == 3 && vars->east.path != '\0')
 		vars->east.path = ft_strtrim(str, " ");
-	else if (type == 4)
+	else if (type == 4 && vars->west.path != '\0')
 		vars->west.path = ft_strtrim(str, " ");
 	else
 		vars->stexture.path = ft_strtrim(str, " ");
 	return (1);
 }
+
+//INICIALIZAR COSAS A '\0'
 
 int     init_textures(t_vars *vars, char *str);
 {
@@ -91,6 +93,8 @@ int find_text(t_vars *vars, char *str)
         parse_textures(vars, str, 5);
     else if (str[i] == 'R')
         resolution(vars, str, 6);
+    else
+        is_colour(vars, str);
 
     return(0);
 }
