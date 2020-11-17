@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/16 13:00:17 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:45:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int		colour_save(t_vars *vars, char *str)
 	vars->texture.sky[0] = ft_atoi(str);
 	vars->texture.sky[1] = ft_atoi(str);
 	vars->texture.sky[2] = ft_atoi(str);
+	printf("%d\n", vars->texture.sky[0]);
+	printf("%d\n", vars->texture.sky[1]);
+	printf("%d\n", vars->texture.sky[2]);
 	return (1);
 }
 
@@ -62,4 +65,5 @@ int		is_colour(t_vars *vars, char *str)
 		return (0);
 	if ((!check_colour(vars, str)))
 		return (0);
+	return(1);
 }

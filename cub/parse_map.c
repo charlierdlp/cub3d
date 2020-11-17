@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/15 12:16:36 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:26:30 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int     start_map(t_vars *vars, int fd)
         vars->map.height++;
         free(line);
 	}
+	printf("%s\n", vars->map.width);
+	printf("%s\n", vars->map.height);
 }
 
 int		mapalloc(t_vars *vars)
@@ -68,4 +70,3 @@ int		recheck_map(t_vars *vars, char *line, int i)
 	}
 	return (1);
 }
-

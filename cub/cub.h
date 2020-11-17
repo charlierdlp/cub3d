@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/16 12:15:31 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 12:48:23 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <signal.h>
+# include "./libft/libft.h"
 # include "pthread.h"
 # include "./minilibx/mlx.h"
+# include "./gnl/get_next_line.h"
 # define WIDTH 15
 # define HEIGHT 15
 # define SCREEN_HEIGHT 600
@@ -162,7 +164,7 @@ typedef struct	s_vars
 
 }				t_vars;
 
-extern int map[HEIGHT][WIDTH];
+//extern int map[HEIGHT][WIDTH];
 
 void	ch_mlx_pixel_put(t_img *data, int x, int y, int color);
 void	dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color);
@@ -179,6 +181,11 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite);
 void	find_sprites(t_vars *vars);
 int 	sprite_array(t_vars *vars);
 void	sort_sarray(t_vars *vars);
+int		read_text(t_vars *vars, char *file);
+int		is_colour(t_vars *vars, char *str);
+int     empty_line(char *str);
+int		resolution(t_vars *vars, char *str);
+int     start_map(t_vars *vars, int fd);
 
 
 #endif

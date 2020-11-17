@@ -6,36 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/13 13:41:50 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:19:30 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-/*
-int		mapalloc(t_vars *vars)
-{
-	int	i;
-	int	j;
-
-	if(!(vars->map.map = malloc(vars->map.height * sizeof(char *))))
-		return(0);
-	i = 0;
-	while(i < vars->map.height)
-	{
-		j = 0;
-		if(!(vars->map.map[i] = malloc(vars->map.width * sizeof(char *))))
-			return(0);
-		while(j < vars->map.width)
-		{
-			vars->map.map[][]
-			j++;
-		}
-		i++;
-
-	}
-
-}
-*/
 
 void	find_sprites(t_vars *vars)
 {
@@ -50,7 +25,7 @@ void	find_sprites(t_vars *vars)
 		j = 0;
 		while (j < vars->map.width)
 		{
-			if(map[i][j] == 2)
+			if(vars->map.map[i][j] == 2)
 				vars->snumber++;
  			j++;
 		}
@@ -70,12 +45,12 @@ int 	sprite_array(t_vars *vars)
 	find_sprites(vars);
 	if(!(vars->sprite = malloc(vars->snumber * sizeof(t_sprite))))
 		return(0);
-	while (i < HEIGHT)
+	while (i < vars->map.height)
 	{
 		j = 0;
-		while (j < WIDTH)
+		while (j < vars->map.width)
 		{
-			if (map[i][j] == 2)
+			if (vars->map.map[i][j] == 2)
 			{
 				vars->sprite[k].x = j + 0.5;
 				vars->sprite[k].y =	i + 0.5;
@@ -85,7 +60,7 @@ int 	sprite_array(t_vars *vars)
 		}
 		i++;
 	}
-	if (!(vars->walls.dist = malloc(SCREEN_WIDTH * sizeof(float))))
+	if (!(vars->walls.dist = malloc(vars->parser.width * sizeof(float))))
 		return(0);
 	return(1);
 }
@@ -123,13 +98,13 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 	ydist = sprite->y - vars->player.y;
 	sprite->leftangle = vars->player.angle - (vars->player.fov / 2);
 	sprite->leftangle += (sprite->leftangle < 0 ) ? 360 : 0;
-	sprite->pixels_per_degree = SCREEN_WIDTH / vars->player.fov;
+	sprite->pixels_per_degree = vars->parser.width / vars->player.fov;
 	sprite->angle = atan2(ydist, xdist) * 180 / M_PI;
 	sprite->relative = sprite->angle - sprite->leftangle;
 	sprite->relative += (sprite->relative < 0 ) ? 360 : 0;
 	sprite->position = sprite->pixels_per_degree * sprite->relative;
 	sprite->distance = sqrt(pow(xdist, 2) + pow(ydist, 2));
-	sprite->drawheight = (int)((SCREEN_HEIGHT / 2) / sprite->distance);
+	sprite->drawheight = (int)((vars->parser.height / 2) / sprite->distance);
 	sprite->drawwidth = vars->stexture.width * sprite->drawheight / vars->stexture.height;
 	return (0);
 }
@@ -162,7 +137,7 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite)
 	while (i < vars->stexture.width)
 	{
 		j = 0;
-		y = SCREEN_HEIGHT / 2 - sprite->drawheight;
+		y = vars->parser.height / 2 - sprite->drawheight;
 		while (j < vars->stexture.height)
 		{
 			vars->stexture.color = ((unsigned int*)vars->stexture.addr)[j * vars->stexture.width + i];

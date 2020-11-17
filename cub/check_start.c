@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/16 13:12:00 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:14:04 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int    check_text(t_vars *vars, char *str, int type)
     if (!ft_isascii(str[i]))
 	    return (0);
     save_path(vars, type, str);
-    
+    return(0);
 }
 
 int     save_path(t_vars *vars, int type, char *str)
@@ -37,23 +37,22 @@ int     save_path(t_vars *vars, int type, char *str)
 		vars->east.path = ft_strtrim(str, " ");
 	else if (type == 4 && vars->west.path != '\0')
 		vars->west.path = ft_strtrim(str, " ");
-	else
+	else if (type == 5 && vars->stexture.path != '\0')
 		vars->stexture.path = ft_strtrim(str, " ");
 	return (1);
 }
 
-//INICIALIZAR COSAS A '\0'
-
-int     init_textures(t_vars *vars, char *str);
+int     init_textures(t_vars *vars, char *str, t_textdata *texture)
 {
     int fd;
 
+    printf("%s\n", str);
     if((fd = open(str, O_RDONLY)) == -1)
     {
-        write(1, "Error\n Wrong Texture");
+        write(1, "Error\n Wrong Texture", 21);
         exit(0);
     }
-    texture->img = mlx_xpm_file_to_image(vars->mlx, path,
+    texture->img = mlx_xpm_file_to_image(vars->mlx, str,
 	&texture->width, &texture->height);
     if(!(texture->img))
     {
@@ -66,14 +65,31 @@ int     init_textures(t_vars *vars, char *str);
 }
 
 
-void        parse_textures(t_vars *vars, char *str, int type)
+int        parse_textures(t_vars *vars, char *str, int type)
 {
+    t_textdata *texture;
     int i;
 
     i = 0;
-
+    if (type == 5)
+        i = 1;
+    else
+        i = 2;
+    while (ft_isspace(str[i]))
+	    i++;
     check_text(vars, &str[i], type);
-    init_textures(vars, str);
+    if (type == 1)
+        texture = &vars->north;
+    else if (type == 2)
+        texture = &vars->south;
+    else if (type == 3)
+        texture = &vars->west;
+    else if (type == 4)
+        texture = &vars->east;
+    else if (type == 5)
+        texture = &vars->stexture;
+    init_textures(vars, &str[i], texture);
+    return(0);
 }
 
 int find_text(t_vars *vars, char *str)
@@ -92,7 +108,7 @@ int find_text(t_vars *vars, char *str)
     else if (str[i] == 'S')
         parse_textures(vars, str, 5);
     else if (str[i] == 'R')
-        resolution(vars, str, 6);
+        resolution(vars, str);
     else
         is_colour(vars, str);
 
@@ -111,7 +127,7 @@ int     read_file(t_vars *vars, int fd)
     return(0);
 }
 
-void    read_text(t_vars *vars, char *file)
+int    read_text(t_vars *vars, char *file)
 {
     int fd;
 
@@ -120,6 +136,6 @@ void    read_text(t_vars *vars, char *file)
         write(1, "Error\nFile not found", 21);
         exit(0);
     }
-    read_file(&vars, fd);
-
+    read_file(vars, fd);
+    return(0);
 }

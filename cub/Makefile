@@ -1,9 +1,9 @@
-SRCS        = cub.c raycast.c movement.c textures.c press_release.c sprites.c
+SRCS        = cub.c raycast.c movement.c textures.c press_release.c sprites.c check_start.c parse_resolution.c parse_colour.c parse_map.c ./gnl/get_next_line.c
 OBJS        = ${SRCS:.c=.o}
 NAME        = cub3d
 CC          = cc
 RM          = rm -f
-CFLAGS      = -Wall -Werror -Wextra
+#CFLAGS      = -Wall -Werror -Wextra
 FRAMEWORK   = -lz -L . -lmlx -lft -framework OpenGL -framework AppKit
 .c.o:
 			${CC} ${CFLAGS} -g -c $< -o ${<:.c=.o}

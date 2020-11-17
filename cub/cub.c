@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/13 13:23:55 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:14:56 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,33 @@ void    init_vars(t_vars *vars)
     vars->keys.left = 0;
     vars->keys.right = 0;
     vars->map.width = 0;
+    vars->north.path = NULL;
+    vars->south.path = NULL;
+    vars->east.path = NULL;
+    vars->west.path = NULL;
+    vars->stexture.path = NULL;
+    vars->parser.width = -1;
+    vars->parser.height = -1;
 }
 
-int main()
+int main(int argc, char **argv)
 {
     t_vars vars;
 
     init_vars(&vars);
     vars.mlx = mlx_init();
-    vars.win = mlx_new_window(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Hello World");
-    vars.data.img = mlx_new_image(vars.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+    read_text(&vars, argv[1]);
+    vars.win = mlx_new_window(vars.mlx, vars.parser.width, vars.parser.height, "Hello World");
+    vars.data.img = mlx_new_image(vars.mlx, vars.parser.width, vars.parser.height);
     vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
+    /*
     textures(&vars, "./text/brick1.xpm", &vars.north);
     textures(&vars, "./text/brick2.xpm", &vars.south);
     textures(&vars, "./text/brick3.xpm", &vars.east);
     textures(&vars, "./text/brick4.xpm", &vars.west);
+    */
     sprite_array(&vars);
-    textures(&vars, "./text/8bit.xpm", &vars.stexture);
+    //textures(&vars, "./text/8bit.xpm", &vars.stexture);
     vars.pid = fork();
 	if (!vars.pid)
 		playtrack("./music/theme.mp3");

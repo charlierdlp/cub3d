@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/10 12:02:34 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:28:51 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ch_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char *dst;
 
-	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || x < 0 || y < 0)
+	if (x < 0 || y < 0) //screem height screen width
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
@@ -56,25 +56,25 @@ void	wall_check(t_vars *vars)
 	while (vars->walls.wall == 0)
 	{
 		vars->x += vars->rays.raycos;
-		if (map[(int)vars->y][(int)vars->x] == 1)
+		if (vars->map.map[(int)vars->y][(int)vars->x] == 1)
 		{
 			vars->dir = vars->rays.raycos < 0 ? 'W' : 'E';
 			if (vars->dir == 'W')
 				vars->texture = vars->west;
 			else
 				vars->texture = vars->east;
-			vars->walls.wall = map[(int)vars->y][(int)vars->x];			
+			vars->walls.wall = vars->map.map[(int)vars->y][(int)vars->x];			
 			break ;
 		}
 		vars->y += vars->rays.raysin;
-		if (map[(int)vars->y][(int)vars->x] == 1)
+		if (vars->map.map[(int)vars->y][(int)vars->x] == 1)
 		{
 			vars->dir = vars->rays.raysin < 0 ? 'N' : 'S';
 			if (vars->dir == 'N')
 				vars->texture = vars->north;
 			else
 				vars->texture = vars->south;
-			vars->walls.wall = map[(int)vars->y][(int)vars->x];
+			vars->walls.wall = vars->map.map[(int)vars->y][(int)vars->x];
 		}
 	}
 }
@@ -85,15 +85,15 @@ void	wall_dist_height(t_vars *vars)
 	vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2) + pow(vars->player.y - vars->y, 2));
 	vars->walls.dist[vars->raycount] = vars->walls.distance;
 	vars->walls.distance = vars->walls.distance * cos((vars->rays.rayangle - vars->player.angle) * M_PI / 180);
-	vars->walls.height = (int)((SCREEN_HEIGHT/2) / vars->walls.distance);
+	vars->walls.height = (int)((vars->parser.height/2) / vars->walls.distance);
 	vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width));			
 }
 
 void 	paint(t_vars *vars)
 {
-	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, SCREEN_HEIGHT / 2 - vars->walls.height, 0x00A1DD);
+	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, 0x00A1DD);
 	drawtexture(vars, vars->raycount);
-	dda_algorithm(&vars->data, vars->raycount, SCREEN_HEIGHT / 2 + vars->walls.height, vars->raycount, SCREEN_HEIGHT, 0xA0A0A0);
+	dda_algorithm(&vars->data, vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height, 0xA0A0A0);
 }
 
 void	init_sprites(t_vars *vars)
@@ -120,7 +120,7 @@ int	raycasting(t_vars *vars)
 	vars->rays.rayangle = vars->player.angle - vars->player.fov/2;
 	vars->raycount = 0;
 	move(vars);
-	while (vars->raycount < SCREEN_WIDTH)
+	while (vars->raycount < vars->parser.width)
 	{
 		vars->x = vars->player.x;
 		vars->y = vars->player.y;
@@ -130,7 +130,7 @@ int	raycasting(t_vars *vars)
 
 		wall_dist_height(vars);
 		paint(vars);
-		vars->rays.rayangle += vars->player.fov/SCREEN_WIDTH;
+		vars->rays.rayangle += vars->player.fov/vars->parser.width;
 		vars->raycount += 1;
 	}
 	//calc_angles(vars, &vars->sprite[vars->snumber]);
