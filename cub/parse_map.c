@@ -6,29 +6,25 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/17 13:26:30 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/18 13:47:35 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int     start_map(t_vars *vars, int fd)
+int     count_map(t_vars *vars, char *str)
 {
-    char    *line;
-    char    i;
+	char    i;
     int     length;
 
 
-    while ((i = get_next_line(fd, &line)) > 0)
-	{
-        length = ft_strlen(line);
-        if (vars->map.width < length)
-            vars->map.width = length;
-        vars->map.height++;
-        free(line);
-	}
-	printf("%s\n", vars->map.width);
-	printf("%s\n", vars->map.height);
+	length = ft_strlen(str);
+	if (vars->map.width < length)
+		vars->map.width = length;
+   	 vars->map.height++;
+	//printf("%d\n", vars->map.width);
+	//printf("%d\n",vars->map.height);
+	return(0);
 }
 
 int		mapalloc(t_vars *vars)
@@ -41,14 +37,16 @@ int		mapalloc(t_vars *vars)
 	if(!(vars->map.map = malloc(vars->map.height * sizeof(char *))))
 		return(0);
 	i = 0;
-     while ((i = get_next_line(fd, &line)) > 0)
+     while ((get_next_line(fd, &line)) > 0)
 	{
+		printf("ajun\n");
         if (!(vars->map.map[i] = malloc(vars->map.width * sizeof(char))))
 			return (0);
         vars->map.map[i] = ft_strdup(line);
         vars->map.height++;
         i++;
         free(line);
+		printf("%s\n", vars->map.map[i]);
     }
     return(0);
 }
@@ -69,4 +67,10 @@ int		recheck_map(t_vars *vars, char *line, int i)
 		j++;
 	}
 	return (1);
+}
+
+int     start_map(t_vars *vars, char *str)
+{
+	mapalloc(vars);	
+	return(0);
 }

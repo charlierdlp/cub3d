@@ -6,26 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/17 13:14:04 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/18 13:48:25 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-int    check_text(t_vars *vars, char *str, int type)
-{
-    int i;
-    
-    i = 0;
-    if(!(ft_isspace(str[i])))
-       return(0);
-    while (ft_isspace(str[i]))
-	    i++;
-    if (!ft_isascii(str[i]))
-	    return (0);
-    save_path(vars, type, str);
-    return(0);
-}
 
 int     save_path(t_vars *vars, int type, char *str)
 {
@@ -40,6 +25,21 @@ int     save_path(t_vars *vars, int type, char *str)
 	else if (type == 5 && vars->stexture.path != '\0')
 		vars->stexture.path = ft_strtrim(str, " ");
 	return (1);
+}
+
+int    check_text(t_vars *vars, char *str, int type)
+{
+    int i;
+    
+    i = 0;
+    if(!(ft_isspace(str[i])))
+       return(0);
+    while (ft_isspace(str[i]))
+	    i++;
+    if (!ft_isascii(str[i]))
+	    return (0);
+    save_path(vars, type, str);
+    return(0);
 }
 
 int     init_textures(t_vars *vars, char *str, t_textdata *texture)
@@ -92,7 +92,7 @@ int        parse_textures(t_vars *vars, char *str, int type)
     return(0);
 }
 
-int find_text(t_vars *vars, char *str)
+int find_text(t_vars *vars, char *str, int fd)
 {
     int     i;
 
@@ -109,9 +109,10 @@ int find_text(t_vars *vars, char *str)
         parse_textures(vars, str, 5);
     else if (str[i] == 'R')
         resolution(vars, str);
-    else
+    else if (str[i] == 'F' || str[i] == 'C')
         is_colour(vars, str);
-
+    else if (ft_strchr("012", str[i]))
+        count_map(vars, &str[i]);
     return(0);
 }
 
@@ -121,7 +122,7 @@ int     read_file(t_vars *vars, int fd)
     int     i;
     while((i = get_next_line(fd, &line)) > 0)
     {
-        find_text(vars, line);
+        find_text(vars, line, fd);
         free(line);
     }
     return(0);
@@ -137,5 +138,12 @@ int    read_text(t_vars *vars, char *file)
         exit(0);
     }
     read_file(vars, fd);
+    close(fd);
+    if ((fd = open(file ,O_RDONLY)) == -1)
+    {
+        write(1, "Error\nFile not found", 21);
+        exit(0);
+    }
+    //saltar principio, alocar mapa
     return(0);
 }

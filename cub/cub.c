@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/17 13:14:56 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/18 12:17:51 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,27 @@ int main(int argc, char **argv)
     init_vars(&vars);
     vars.mlx = mlx_init();
     read_text(&vars, argv[1]);
+    /*
     vars.win = mlx_new_window(vars.mlx, vars.parser.width, vars.parser.height, "Hello World");
     vars.data.img = mlx_new_image(vars.mlx, vars.parser.width, vars.parser.height);
     vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
-    /*
+
     textures(&vars, "./text/brick1.xpm", &vars.north);
     textures(&vars, "./text/brick2.xpm", &vars.south);
     textures(&vars, "./text/brick3.xpm", &vars.east);
     textures(&vars, "./text/brick4.xpm", &vars.west);
-    */
+
     sprite_array(&vars);
     //textures(&vars, "./text/8bit.xpm", &vars.stexture);
     vars.pid = fork();
+
 	if (!vars.pid)
 		playtrack("./music/theme.mp3");
+
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_hook(vars.win, 17, 1L<0, x_close, &vars);
     mlx_loop_hook(vars.mlx, raycasting, &vars);
     mlx_loop(vars.mlx);
+    */
 }
