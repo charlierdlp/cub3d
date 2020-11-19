@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/18 13:47:35 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/19 13:35:40 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,60 +17,90 @@ int     count_map(t_vars *vars, char *str)
 	char    i;
     int     length;
 
-
+	if (!str || str[i] == '\0')
+		return (0);
 	length = ft_strlen(str);
 	if (vars->map.width < length)
 		vars->map.width = length;
    	 vars->map.height++;
-	//printf("%d\n", vars->map.width);
-	//printf("%d\n",vars->map.height);
 	return(0);
 }
 
-int		mapalloc(t_vars *vars)
+int		spawn(t_vars *vars, int y, int x)
 {
-    char *line;
-    int fd;
-	int	i;
-	int	j;
-
-	if(!(vars->map.map = malloc(vars->map.height * sizeof(char *))))
-		return(0);
-	i = 0;
-     while ((get_next_line(fd, &line)) > 0)
-	{
-		printf("ajun\n");
-        if (!(vars->map.map[i] = malloc(vars->map.width * sizeof(char))))
-			return (0);
-        vars->map.map[i] = ft_strdup(line);
-        vars->map.height++;
-        i++;
-        free(line);
-		printf("%s\n", vars->map.map[i]);
-    }
-    return(0);
+	if (vars->map.map[y][x] == 'N')
+		vars->player.angle = 270;
+	else if (vars->map.map[y][x] == 'S')
+		vars->player.angle = 90;
+	else if (vars->map.map[y][x] == 'E')
+		vars->player.angle = 0;
+	else if (vars->map.map[y][x] == 'W')
+		vars->player.angle = 180;
 }
 
-int		recheck_map(t_vars *vars, char *line, int i)
+int		recheck_map(t_vars *vars)
 {
-	int	j;
+	int	y;
+	int	x;
 
-	j = 0;
-	while (line[i] != '\0')
+	y = 0;
+	while (y < vars->map.height)
 	{
-		if (!ft_strchr("012NESW ", line[i]))
-			return (0);
-        if (line[j] == ' ')
-			vars->map.map[i][j] = '0';
-    	else
-			vars->map.map[i][j] = line[j];
-		j++;
+		x = 0;
+		while (vars->map.map[y][x])
+		{
+			if (ft_strchr("NWSE", vars->map.map[y][x]))
+			{
+				spawn(vars, y, x);
+				vars->player.x = y;
+				vars->player.x = x;
+				vars->map.map[y][x] = '0';
+			}
+			x++;
+		}
+		y++;
 	}
 	return (1);
 }
 
-int     start_map(t_vars *vars, char *str)
+int		fill(t_vars *vars, int x, int y)
 {
-	mapalloc(vars);	
+
+	return(0);
+}
+
+
+int		jump(t_vars *vars, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (0);
+	if (ft_strchr("012", str[i]))
+	{
+		vars->map.map[vars->map.current] = ft_strdup(str);
+		vars->map.current++;
+	}
+	return(0);
+}
+
+int     start_map(t_vars *vars, int fd)
+{
+	char    *line;
+    int     i;
+
+	vars->map.map = malloc(sizeof(char *) * vars->map.height * vars->map.width);
+	vars->map.current = 0;
+    while ((i = get_next_line(fd, &line)) > 0)
+    {
+		jump(vars, line);
+		free(line);
+    }
+	jump(vars, line);
+	free(line);
+	recheck_map(vars);
 	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/18 13:48:25 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:56:57 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int find_text(t_vars *vars, char *str, int fd)
         resolution(vars, str);
     else if (str[i] == 'F' || str[i] == 'C')
         is_colour(vars, str);
-    else if (ft_strchr("012", str[i]))
+    else if (ft_strchr(" 012", str[i]))
         count_map(vars, &str[i]);
     return(0);
 }
@@ -125,6 +125,8 @@ int     read_file(t_vars *vars, int fd)
         find_text(vars, line, fd);
         free(line);
     }
+    find_text(vars, line, fd);
+    free(line);
     return(0);
 }
 
@@ -144,6 +146,7 @@ int    read_text(t_vars *vars, char *file)
         write(1, "Error\nFile not found", 21);
         exit(0);
     }
+    start_map(vars, fd);
     //saltar principio, alocar mapa
     return(0);
 }

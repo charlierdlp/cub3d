@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/18 12:17:51 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:37:15 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void    init_vars(t_vars *vars)
     vars->east.path = NULL;
     vars->west.path = NULL;
     vars->stexture.path = NULL;
-    vars->parser.width = -1;
-    vars->parser.height = -1;
+    vars->parser.width = 0;
+    vars->parser.height = 0;
 }
 
 int main(int argc, char **argv)

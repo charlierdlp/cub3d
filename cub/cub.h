@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/18 13:48:19 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:55:45 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct	s_map
 	char		**map;
 	int			width;
 	int			height;
+	int			current;
 }				t_map;
 
 typedef struct	s_keys
@@ -185,7 +186,8 @@ int		read_text(t_vars *vars, char *file);
 int		is_colour(t_vars *vars, char *str);
 int     empty_line(char *str);
 int		resolution(t_vars *vars, char *str);
-int     start_map(t_vars *vars, char *str);
+int     start_map(t_vars *vars, int fd);
+int     count_map(t_vars *vars, char *str);
 
 
 #endif
