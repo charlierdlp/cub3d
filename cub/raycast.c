@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/17 13:28:51 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/20 14:04:12 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ch_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char *dst;
 
-	if (x < 0 || y < 0) //screem height screen width
+	if (x < 0 || y < 0 || x >= data->width || y >= data->height) //screem height screen width
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
@@ -56,7 +56,7 @@ void	wall_check(t_vars *vars)
 	while (vars->walls.wall == 0)
 	{
 		vars->x += vars->rays.raycos;
-		if (vars->map.map[(int)vars->y][(int)vars->x] == 1)
+		if (vars->map.map[(int)vars->y][(int)vars->x] == '1')
 		{
 			vars->dir = vars->rays.raycos < 0 ? 'W' : 'E';
 			if (vars->dir == 'W')
@@ -67,7 +67,7 @@ void	wall_check(t_vars *vars)
 			break ;
 		}
 		vars->y += vars->rays.raysin;
-		if (vars->map.map[(int)vars->y][(int)vars->x] == 1)
+		if (vars->map.map[(int)vars->y][(int)vars->x] == '1')
 		{
 			vars->dir = vars->rays.raysin < 0 ? 'N' : 'S';
 			if (vars->dir == 'N')
@@ -133,8 +133,6 @@ int	raycasting(t_vars *vars)
 		vars->rays.rayangle += vars->player.fov/vars->parser.width;
 		vars->raycount += 1;
 	}
-	//calc_angles(vars, &vars->sprite[vars->snumber]);
-	//draw_sprites(vars, &vars->sprite[vars->snumber]);
 	init_sprites(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
 	return (0);
