@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/20 14:07:42 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/23 11:11:54 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void    init_vars(t_vars *vars)
     vars->stexture.path = NULL;
     vars->parser.width = 0;
     vars->parser.height = 0;
+    vars->map.start = 0;
 }
 
 int main(int argc, char **argv)
@@ -81,4 +82,4 @@ int main(int argc, char **argv)
     mlx_loop(vars.mlx);
 }
 
-// RGB a HEX , spaces in map, floodfill, screenshot
+// RGB a HEX , floodfill, screenshot

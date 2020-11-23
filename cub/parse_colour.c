@@ -6,11 +6,22 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/18 12:52:25 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/23 14:21:49 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+/*
+unsigned	int	ft_rgbtohex(int rgb[3])
+{
+	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
+		return (0 << 16 | 0 << 8 | 0);
+	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+}*/
+unsigned long	ft_rgbtohex(int r, int g, int b)
+{
+	return ((r << 16) + (g << 8) + b);
+}
 
 int		check_colour(t_vars *vars)
 {

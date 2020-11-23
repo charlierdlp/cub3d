@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/20 14:04:12 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/23 14:21:11 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,14 @@ void	wall_dist_height(t_vars *vars)
 
 void 	paint(t_vars *vars)
 {
-	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, 0x00A1DD);
+	unsigned long sky;
+	unsigned long floor;
+	
+	vars->floor = ft_rgbtohex(vars->texture.floor[0], vars->texture.floor[1], vars->texture.floor[2]);
+	vars->sky = ft_rgbtohex(vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
+	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, vars->sky);
 	drawtexture(vars, vars->raycount);
-	dda_algorithm(&vars->data, vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height, 0xA0A0A0);
+	dda_algorithm(&vars->data, vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height, vars->floor);
 }
 
 void	init_sprites(t_vars *vars)

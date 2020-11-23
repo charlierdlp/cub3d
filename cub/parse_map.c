@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/20 13:42:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/23 13:05:43 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 int     count_map(t_vars *vars, char *str)
 {
-	char    i;
-    int     length;
+	int    i;
+    int    length;
 
-	if (!str || str[i] == '\0')
-		return (0);
+	i = 0;
+	if (vars->map.start == 2)
+	{
+		write(1, "Error\nFinished Map", 19);
+        exit(0);
+	}
+	vars->map.start = 1;
 	length = ft_strlen(str);
 	if (vars->map.width < length)
 		vars->map.width = length;
    	 vars->map.height++;
+
 	return(0);
 }
 

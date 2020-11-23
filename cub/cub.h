@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/20 13:47:20 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/23 14:21:10 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct	s_map
 	int			width;
 	int			height;
 	int			current;
+	int			start;
 }				t_map;
 
 typedef struct	s_keys
@@ -164,6 +165,8 @@ typedef struct	s_vars
 	t_keys		keys;
 	t_rays		rays;
 	t_parser	parser;
+	unsigned long sky;
+	unsigned long floor;
 
 }				t_vars;
 
@@ -192,6 +195,7 @@ int     start_map(t_vars *vars, int fd);
 int     count_map(t_vars *vars, char *str);
 int		check_text(t_vars *vars, char *str, int type);
 int     init_textures(t_vars *vars, char *str, t_textdata *texture);
+unsigned	long ft_rgbtohex(int r, int g, int b);
 
 
 #endif

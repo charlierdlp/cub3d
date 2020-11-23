@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:18:38 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/11 11:09:36 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/23 11:49:32 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	x_close(t_vars *vars)
 {
 	mlx_destroy_image(vars->mlx, vars->data.img);
 	mlx_destroy_window(vars->mlx, vars->win);
+	if (vars->pid)
+		kill(vars->pid, 15);
 	exit(0);
 }
 
