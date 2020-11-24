@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/24 12:25:06 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/24 13:36:29 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,4 @@ int main(int argc, char **argv)
     mlx_loop(vars.mlx);
 }
 
-// RGB a HEX , floodfill, screenshot
+//  screenshot

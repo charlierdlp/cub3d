@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/24 13:15:34 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/24 13:39:01 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ int		recheck_map(t_vars *vars)
 			x++;
 		}
 		y++;
+	}
+	if (vars->player.x == 0 && vars->player.y == 0)
+	{
+		write(1, "Error\nNo Player", 16);
+        exit(0);
 	}
 	return (1);
 }
