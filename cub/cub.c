@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/23 11:11:54 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/24 12:25:06 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int main(int argc, char **argv)
     init_vars(&vars);
     vars.mlx = mlx_init();
     read_text(&vars, argv[1]);
+    vars.floor = ft_rgbtohex(vars.texture.floor[0], vars.texture.floor[1], vars.texture.floor[2]);
+	vars.sky = ft_rgbtohex(vars.texture.sky[0], vars.texture.sky[1], vars.texture.sky[2]);
     vars.data.width = vars.parser.width;
     vars.data.height = vars.parser.height;
     vars.win = mlx_new_window(vars.mlx, vars.parser.width, vars.parser.height, "Hello World");
@@ -71,10 +73,8 @@ int main(int argc, char **argv)
     vars.data.addr = mlx_get_data_addr(vars.data.img, &vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
     sprite_array(&vars);
     vars.pid = fork();
-
 	if (!vars.pid)
 		playtrack("./music/theme.mp3");
-
     mlx_hook(vars.win, 02, 1L<0, key_press, &vars);
     mlx_hook(vars.win, 03, 1L<0, key_release, &vars);
     mlx_hook(vars.win, 17, 1L<0, x_close, &vars);

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/23 14:21:10 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/24 12:21:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ typedef struct	s_vars
 	t_parser	parser;
 	unsigned long sky;
 	unsigned long floor;
-
 }				t_vars;
 
 //extern int map[HEIGHT][WIDTH];

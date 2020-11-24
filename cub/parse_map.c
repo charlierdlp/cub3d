@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/23 13:05:43 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/24 13:15:34 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,43 @@ int		recheck_map(t_vars *vars)
 	}
 	return (1);
 }
+void		perimeter_check(t_vars *vars)
+{
+	int i;
+	int x;
+	int y;
+
+	i = 0;
+	x = 0;
+	y = 0;
+	while (i < ft_strlen(vars->map.map[0]))
+	{
+		if (vars->map.map[0][x] == 'M' || vars->map.map[vars->map.height - 1][x] == 'M')
+		{
+			write(1, "Error\nOpen Map", 15);
+        	exit(0);
+		}
+		x++;
+		i++;
+	}
+	i = 0;
+	while (i < vars->map.height)
+	{
+		if (vars->map.map[y][0] == 'M' || vars->map.map[0][ft_strlen(vars->map.map[0]) - 1] == 'M')
+		{
+			write(1, "Error\nOpen Map", 15);
+       		exit(0);
+		}
+		y++;
+		i++;
+	}
+}
 
 void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
 {
+	int i;
+
+	i = 0;
 	if (x < 0 || x >= vars->map.width || y < 0 || y >= vars->map.height)
 		return ;
 	if (vars->map.map[y][x] == '\0')
@@ -138,10 +172,13 @@ int     start_map(t_vars *vars, int fd)
 		jump(vars, line);
 		free(line);
     }
+    //printf("%d, %d, %d\n", vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
 	jump(vars, line);
 	free(line);
 	recheck_map(vars);
 	flood_fill(vars, vars->player.x, vars->player.y, '0');
+	perimeter_check(vars);
 	replace(vars);
+	//printf("%d, %d, %d\n", vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
 	return(0);
 }

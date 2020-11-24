@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/23 14:17:53 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/24 12:25:38 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,8 @@ int     read_file(t_vars *vars, int fd)
     }
     find_text(vars, line, fd);
     free(line);
-    printf("%d, %d, %d\n", vars->texture.floor[0], vars->texture.floor[1], vars->texture.floor[2]);
-    printf("%d, %d, %d\n", vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
-    
+    //printf("%d, %d, %d\n", vars->texture.floor[0], vars->texture.floor[1], vars->texture.floor[2]);
+    //printf("%d, %d, %d\n", vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
     return(0);
 }
 
