@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/24 12:21:24 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/25 12:50:46 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,11 @@ unsigned	long ft_rgbtohex(int rgb[3])
 		return (0 << 16 | 0 << 8 | 0);
 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
 }*/
-
 unsigned long	ft_rgbtohex(int r, int g, int b)
 {
 	return ((r << 16) + (g << 8) + b);
 }
-
-
-int		check_colour(t_vars *vars)
+int	check_colour(t_vars *vars)
 {
 	if (vars->texture.sky[0] >= 0
 		&& vars->texture.sky[0] <= 255
@@ -40,7 +37,7 @@ int		check_colour(t_vars *vars)
 	return (0);
 }
 
-int		colour_save(t_vars *vars, char *str, int type, char differ)
+int	colour_save(t_vars *vars, char *str, int type, char differ)
 {
 	if (!ft_isdigit(str[0]))
 		return (0);
@@ -65,7 +62,7 @@ int		colour_save(t_vars *vars, char *str, int type, char differ)
 	return (1);
 }
 
-int		is_colour(t_vars *vars, char *str)
+int	is_colour(t_vars *vars, char *str)
 {
 	int		i;
 	char	differ;
@@ -83,19 +80,19 @@ int		is_colour(t_vars *vars, char *str)
 		i++;
 	if (str[i] == ',')
 		i++;
-    while (ft_isspace(str[i]))
+	while (ft_isspace(str[i]))
 		i++;
-    if ((!colour_save(vars, &str[i], 1, differ)))
+	if ((!colour_save(vars, &str[i], 1, differ)))
 		return (0);
 	while (ft_isdigit(str[i]))
 		i++;
 	if (str[i] == ',')
 		i++;
-    while (ft_isspace(str[i]))
+	while (ft_isspace(str[i]))
 		i++;
 	if ((!colour_save(vars, &str[i], 2, differ)))
 		return (0);
 	if ((!check_colour(vars)))
 		return (0);
-	return(1);
+	return (1);
 }

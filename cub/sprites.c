@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/20 14:05:19 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/25 12:58:15 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	find_sprites(t_vars *vars)
 		j = 0;
 		while (j < vars->map.width)
 		{
-			if(vars->map.map[i][j] == '2')
+			if (vars->map.map[i][j] == '2')
 				vars->snumber++;
- 			j++;
+			j++;
 		}
 		i++;
-	}	                                                                                    
+	}
 }
 
-int 	sprite_array(t_vars *vars)
+int		sprite_array(t_vars *vars)
 {
 	int	i;
 	int	j;
@@ -43,8 +43,8 @@ int 	sprite_array(t_vars *vars)
 	j = 0;
 	k = 0;
 	find_sprites(vars);
-	if(!(vars->sprite = malloc(vars->snumber * sizeof(t_sprite))))
-		return(0);
+	if (!(vars->sprite = malloc(vars->snumber * sizeof(t_sprite))))
+		return (0);
 	while (i < vars->map.height)
 	{
 		j = 0;
@@ -53,7 +53,7 @@ int 	sprite_array(t_vars *vars)
 			if (vars->map.map[i][j] == '2')
 			{
 				vars->sprite[k].x = j + 0.5;
-				vars->sprite[k].y =	i + 0.5;
+				vars->sprite[k].y = i + 0.5;
 				k++;
 			}
 			j++;
@@ -61,23 +61,23 @@ int 	sprite_array(t_vars *vars)
 		i++;
 	}
 	if (!(vars->walls.dist = malloc(vars->parser.width * sizeof(float))))
-		return(0);
-	return(1);
+		return (0);
+	return (1);
 }
 
 void	sort_sarray(t_vars *vars)
 {
 	int			i;
 	int			j;
-	t_sprite 	tmp;
+	t_sprite	tmp;
 
 	i = 0;
-	while(i < vars->snumber)
+	while (i < vars->snumber)
 	{
 		j = 0;
-		while(j < vars->snumber)
+		while (j < vars->snumber)
 		{
-			if(vars->sprite[j].distance < vars->sprite[i].distance)
+			if (vars->sprite[j].distance < vars->sprite[i].distance)
 			{
 				tmp = vars->sprite[j];
 				vars->sprite[j] = vars->sprite[i];
@@ -97,11 +97,11 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 	xdist = sprite->x - vars->player.x;
 	ydist = sprite->y - vars->player.y;
 	sprite->leftangle = vars->player.angle - (vars->player.fov / 2);
-	sprite->leftangle += (sprite->leftangle < 0 ) ? 360 : 0;
+	sprite->leftangle += (sprite->leftangle < 0) ? 360 : 0;
 	sprite->pixels_per_degree = vars->parser.width / vars->player.fov;
 	sprite->angle = atan2(ydist, xdist) * 180 / M_PI;
 	sprite->relative = sprite->angle - sprite->leftangle;
-	sprite->relative += (sprite->relative < 0 ) ? 360 : 0;
+	sprite->relative += (sprite->relative < 0) ? 360 : 0;
 	sprite->position = sprite->pixels_per_degree * sprite->relative;
 	sprite->distance = sqrt(pow(xdist, 2) + pow(ydist, 2));
 	sprite->drawheight = (int)((vars->parser.height / 2) / sprite->distance);
@@ -130,7 +130,6 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite)
 
 	i = 0;
 	j = 0;
-
 	x = sprite->position - sprite->drawwidth;
 	x_inc = (sprite->drawwidth * 2) / vars->stexture.width;
 	y_inc = (sprite->drawheight * 2) / vars->stexture.height;
@@ -148,5 +147,5 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite)
 		x += x_inc;
 		i++;
 	}
-	return(0);
+	return (0);
 }

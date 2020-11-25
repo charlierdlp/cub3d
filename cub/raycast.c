@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/24 12:24:50 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/25 13:06:50 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	ch_mlx_pixel_put(t_img *data, int x, int y, int color)
 
 void	dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color)
 {
-	int x;
-	int y;
-	int dx;
-	int dy;
-	int steps;
-	float xinc;
-	float yinc;
-	int i;
+	int		x;
+	int		y;
+	int		dx;
+	int		dy;
+	int		steps;
+	float	xinc;
+	float	yinc;
+	int		i;
 
 	i = 0;
 	dx = x1 - x0;
@@ -63,7 +63,7 @@ void	wall_check(t_vars *vars)
 				vars->texture = vars->west;
 			else
 				vars->texture = vars->east;
-			vars->walls.wall = vars->map.map[(int)vars->y][(int)vars->x];			
+			vars->walls.wall = vars->map.map[(int)vars->y][(int)vars->x];
 			break ;
 		}
 		vars->y += vars->rays.raysin;
@@ -85,11 +85,11 @@ void	wall_dist_height(t_vars *vars)
 	vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2) + pow(vars->player.y - vars->y, 2));
 	vars->walls.dist[vars->raycount] = vars->walls.distance;
 	vars->walls.distance = vars->walls.distance * cos((vars->rays.rayangle - vars->player.angle) * M_PI / 180);
-	vars->walls.height = (int)((vars->parser.height/2) / vars->walls.distance);
-	vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width));			
+	vars->walls.height = (int)((vars->parser.height / 2) / vars->walls.distance);
+	vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width));
 }
 
-void 	paint(t_vars *vars)
+void	paint(t_vars *vars)
 {
 	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, vars->sky);
 	drawtexture(vars, vars->raycount);
@@ -117,24 +117,21 @@ void	init_sprites(t_vars *vars)
 
 int	raycasting(t_vars *vars)
 {
-	vars->rays.rayangle = vars->player.angle - vars->player.fov/2;
+	vars->rays.rayangle = vars->player.angle - vars->player.fov / 2;
 	vars->raycount = 0;
 	move(vars);
 	while (vars->raycount < vars->parser.width)
 	{
 		vars->x = vars->player.x;
 		vars->y = vars->player.y;
-
 		vars->rays.raycos = cos(vars->rays.rayangle * M_PI / 180) / 128;
 		vars->rays.raysin = sin(vars->rays.rayangle * M_PI / 180) / 128;
-
 		wall_dist_height(vars);
 		paint(vars);
-		vars->rays.rayangle += vars->player.fov/vars->parser.width;
+		vars->rays.rayangle += vars->player.fov / vars->parser.width;
 		vars->raycount += 1;
 	}
 	init_sprites(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
 	return (0);
 }
-

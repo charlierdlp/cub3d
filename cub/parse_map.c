@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/24 13:39:01 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/25 12:59:14 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int     count_map(t_vars *vars, char *str)
 		vars->map.width = length;
    	 vars->map.height++;
 
-	return(0);
+	return (0);
 }
 
 int		spawn(t_vars *vars, int y, int x)
@@ -42,7 +42,7 @@ int		spawn(t_vars *vars, int y, int x)
 		vars->player.angle = 0;
 	else if (vars->map.map[y][x] == 'W')
 		vars->player.angle = 180;
-	return(0);
+	return (0);
 }
 
 int		recheck_map(t_vars *vars)
@@ -142,7 +142,7 @@ int		jump(t_vars *vars, char *str)
 		vars->map.map[vars->map.current] = ft_strdup(str);
 		vars->map.current++;
 	}
-	return(0);
+	return (0);
 }
 
 void	replace(t_vars *vars)
@@ -152,12 +152,12 @@ void	replace(t_vars *vars)
 	x = 0;
 	y = 0;
 
-	while(y < vars->map.height)
+	while (y < vars->map.height)
 	{	
 		x = 0;
-		while(vars->map.map[y][x])
+		while (vars->map.map[y][x])
 		{
-			if(vars->map.map[y][x] == 'M')
+			if (vars->map.map[y][x] == 'M')
 				vars->map.map[y][x] = '0';
 			x++;
 		}
@@ -177,13 +177,11 @@ int     start_map(t_vars *vars, int fd)
 		jump(vars, line);
 		free(line);
     }
-    //printf("%d, %d, %d\n", vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
 	jump(vars, line);
 	free(line);
 	recheck_map(vars);
 	flood_fill(vars, vars->player.x, vars->player.y, '0');
 	perimeter_check(vars);
 	replace(vars);
-	//printf("%d, %d, %d\n", vars->texture.sky[0], vars->texture.sky[1], vars->texture.sky[2]);
-	return(0);
+	return (0);
 }
