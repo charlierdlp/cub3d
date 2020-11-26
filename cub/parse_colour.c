@@ -6,38 +6,44 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/25 12:50:46 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/26 12:19:15 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
 /*
-unsigned	long ft_rgbtohex(int rgb[3])
-{
-	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
-		return (0 << 16 | 0 << 8 | 0);
-	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
-}*/
+** unsigned	long ft_rgbtohex(int rgb[3])
+** {
+** 	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
+** 		return (0 << 16 | 0 << 8 | 0);
+** 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+** }
+*/
+
 unsigned long	ft_rgbtohex(int r, int g, int b)
 {
 	return ((r << 16) + (g << 8) + b);
 }
-int	check_colour(t_vars *vars)
+
+int				check_colour(t_vars *vars)
 {
 	if (vars->texture.sky[0] >= 0
 		&& vars->texture.sky[0] <= 255
 		&& vars->texture.sky[1] >= 0 && vars->texture.sky[1] <= 255
 		&& vars->texture.sky[2] >= 0 && vars->texture.sky[2] <= 255)
-		return (1);
-	if (vars->texture.floor[0] >= 0 && vars->texture.floor[0]
-		<= 255
+	{	
+	if (vars->texture.floor[0] >= 0 && vars->texture.floor[0] <= 255
 		&& vars->texture.floor[1] >= 0 && vars->texture.floor[1] <= 255
 		&& vars->texture.floor[2] >= 0 && vars->texture.floor[2] <= 255)
 		return (1);
+	}
+	write(1, "Error\nColour", 13);
+	exit(0);
 	return (0);
 }
 
-int	colour_save(t_vars *vars, char *str, int type, char differ)
+int				colour_save(t_vars *vars, char *str, int type, char differ)
 {
 	if (!ft_isdigit(str[0]))
 		return (0);
@@ -50,7 +56,7 @@ int	colour_save(t_vars *vars, char *str, int type, char differ)
 		else if (type == 2)
 			vars->texture.floor[2] = ft_atoi(str);
 	}
-	else
+	else if (differ == 'C')
 	{
 		if (type == 0)
 			vars->texture.sky[0] = ft_atoi(str);
@@ -62,7 +68,16 @@ int	colour_save(t_vars *vars, char *str, int type, char differ)
 	return (1);
 }
 
-int	is_colour(t_vars *vars, char *str)
+int				fill(t_vars *vars, char *str, char differ, int type)
+{
+	int i;
+
+	if ((!colour_save(vars, &str[i], type, differ)))
+		return (0);
+	return (1);
+}
+
+int				is_colour(t_vars *vars, char *str)
 {
 	int		i;
 	char	differ;
@@ -74,24 +89,17 @@ int	is_colour(t_vars *vars, char *str)
 	i++;
 	while (ft_isspace(str[i]))
 		i++;
-	if ((!colour_save(vars, &str[i], 0, differ)))
-		return (0);
+	fill(vars, &str[i], differ, 0);
 	while (ft_isdigit(str[i]))
 		i++;
 	if (str[i] == ',')
 		i++;
-	while (ft_isspace(str[i]))
-		i++;
-	if ((!colour_save(vars, &str[i], 1, differ)))
-		return (0);
+	fill(vars, &str[i], differ, 1);
 	while (ft_isdigit(str[i]))
 		i++;
 	if (str[i] == ',')
 		i++;
-	while (ft_isspace(str[i]))
-		i++;
-	if ((!colour_save(vars, &str[i], 2, differ)))
-		return (0);
+	fill(vars, &str[i], differ, 2);
 	if ((!check_colour(vars)))
 		return (0);
 	return (1);

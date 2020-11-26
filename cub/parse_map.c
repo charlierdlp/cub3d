@@ -6,29 +6,28 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/25 12:59:14 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/26 12:41:41 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int     count_map(t_vars *vars, char *str)
+int		count_map(t_vars *vars, char *str)
 {
-	int    i;
-    int    length;
+	int	i;
+	int	length;
 
 	i = 0;
 	if (vars->map.start == 2)
 	{
 		write(1, "Error\nFinished Map", 19);
-        exit(0);
+		exit(0);
 	}
 	vars->map.start = 1;
 	length = ft_strlen(str);
 	if (vars->map.width < length)
 		vars->map.width = length;
-   	 vars->map.height++;
-
+	vars->map.height++;
 	return (0);
 }
 
@@ -45,7 +44,7 @@ int		spawn(t_vars *vars, int y, int x)
 	return (0);
 }
 
-int		recheck_map(t_vars *vars)
+void	recheck_map(t_vars *vars)
 {
 	int	y;
 	int	x;
@@ -70,25 +69,26 @@ int		recheck_map(t_vars *vars)
 	if (vars->player.x == 0 && vars->player.y == 0)
 	{
 		write(1, "Error\nNo Player", 16);
-        exit(0);
+		exit(0);
 	}
-	return (1);
 }
-void		perimeter_check(t_vars *vars)
+
+void	perimeter_check(t_vars *vars)
 {
-	int i;
-	int x;
-	int y;
+	int	i;
+	int	x;
+	int	y;
 
 	i = 0;
 	x = 0;
 	y = 0;
 	while (i < ft_strlen(vars->map.map[0]))
 	{
-		if (vars->map.map[0][x] == 'M' || vars->map.map[vars->map.height - 1][x] == 'M')
+		if (vars->map.map[0][x] == 'M'
+		|| vars->map.map[vars->map.height - 1][x] == 'M')// || vars->map.map[0][x] == '2'|| vars->map.map[vars->map.height - 1][x] == '2')
 		{
 			write(1, "Error\nOpen Map", 15);
-        	exit(0);
+			exit(0);
 		}
 		x++;
 		i++;
@@ -96,10 +96,11 @@ void		perimeter_check(t_vars *vars)
 	i = 0;
 	while (i < vars->map.height)
 	{
-		if (vars->map.map[y][0] == 'M' || vars->map.map[0][ft_strlen(vars->map.map[0]) - 1] == 'M')
+		if (vars->map.map[y][0] == 'M'
+		|| vars->map.map[0][ft_strlen(vars->map.map[0]) - 1] == 'M')//|| vars->map.map[y][0] == '2'||vars->map.map[0][ft_strlen(vars->map.map[0]) - 1] == '2')
 		{
 			write(1, "Error\nOpen Map", 15);
-       		exit(0);
+			exit(0);
 		}
 		y++;
 		i++;
@@ -108,7 +109,7 @@ void		perimeter_check(t_vars *vars)
 
 void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (x < 0 || x >= vars->map.width || y < 0 || y >= vars->map.height)
@@ -116,7 +117,7 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
 	if (vars->map.map[y][x] == '\0')
 	{
 		write(1, "Error\nOpen Map", 15);
-        exit(0);
+		exit(0);
 	}
 	if (vars->map.map[y][x] != prev_pos)
 		return ;
@@ -126,7 +127,6 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
 	flood_fill(vars, x, y + 1, prev_pos);
 	flood_fill(vars, x, y - 1, prev_pos);
 }
-
 
 int		jump(t_vars *vars, char *str)
 {
@@ -149,11 +149,11 @@ void	replace(t_vars *vars)
 {
 	int x;
 	int y;
+
 	x = 0;
 	y = 0;
-
 	while (y < vars->map.height)
-	{	
+	{
 		x = 0;
 		while (vars->map.map[y][x])
 		{
@@ -165,18 +165,18 @@ void	replace(t_vars *vars)
 	}
 }
 
-int     start_map(t_vars *vars, int fd)
+int		start_map(t_vars *vars, int fd)
 {
-	char    *line;
-    int     i;
+	char	*line;
+	int		i;
 
 	vars->map.map = malloc(sizeof(char *) * vars->map.height * vars->map.width);
 	vars->map.current = 0;
-    while ((i = get_next_line(fd, &line)) > 0)
-    {
+	while ((i = get_next_line(fd, &line)) > 0)
+	{
 		jump(vars, line);
 		free(line);
-    }
+	}
 	jump(vars, line);
 	free(line);
 	recheck_map(vars);
