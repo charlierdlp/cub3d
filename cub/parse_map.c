@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/26 12:41:41 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/27 12:06:53 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	perimeter_check(t_vars *vars)
 	while (i < ft_strlen(vars->map.map[0]))
 	{
 		if (vars->map.map[0][x] == 'M'
-		|| vars->map.map[vars->map.height - 1][x] == 'M')// || vars->map.map[0][x] == '2'|| vars->map.map[vars->map.height - 1][x] == '2')
+		|| vars->map.map[vars->map.height - 1][x] == 'M' || vars->map.map[0][x] == '2'|| vars->map.map[vars->map.height - 1][x] == '2')
 		{
 			write(1, "Error\nOpen Map", 15);
 			exit(0);
@@ -97,7 +97,7 @@ void	perimeter_check(t_vars *vars)
 	while (i < vars->map.height)
 	{
 		if (vars->map.map[y][0] == 'M'
-		|| vars->map.map[0][ft_strlen(vars->map.map[0]) - 1] == 'M')//|| vars->map.map[y][0] == '2'||vars->map.map[0][ft_strlen(vars->map.map[0]) - 1] == '2')
+		|| vars->map.map[y][ft_strlen(vars->map.map[0]) - 1] == 'M' || vars->map.map[y][0] == '2'||vars->map.map[y][ft_strlen(vars->map.map[0]) - 1] == '2')
 		{
 			write(1, "Error\nOpen Map", 15);
 			exit(0);
@@ -119,9 +119,12 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
 		write(1, "Error\nOpen Map", 15);
 		exit(0);
 	}
-	if (vars->map.map[y][x] != prev_pos)
+	if (vars->map.map[y][x] != prev_pos && vars->map.map[y][x] != '2')
 		return ;
-	vars->map.map[y][x] = 'M';
+	if (vars->map.map[y][x] == '2')
+		vars->map.map[y][x] = 'D';
+	else
+		vars->map.map[y][x] = 'M';
 	flood_fill(vars, x + 1, y, prev_pos);
 	flood_fill(vars, x - 1, y, prev_pos);
 	flood_fill(vars, x, y + 1, prev_pos);
@@ -159,6 +162,8 @@ void	replace(t_vars *vars)
 		{
 			if (vars->map.map[y][x] == 'M')
 				vars->map.map[y][x] = '0';
+			else if (vars->map.map[y][x] == 'D')
+				vars->map.map[y][x] = '2';
 			x++;
 		}
 		y++;

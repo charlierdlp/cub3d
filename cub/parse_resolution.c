@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 11:58:25 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/25 13:02:21 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/27 12:09:27 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ int	empty_line(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	max_resolution(t_vars *vars)
+{
+	if (vars->parser.width > 2560)
+		vars->parser.width = 2560;
+	if (vars->parser.height > 1440)
+		vars->parser.height= 1440;
 }
 
 int	resolution(t_vars *vars, char *str)
@@ -73,6 +81,7 @@ int	resolution(t_vars *vars, char *str)
 			write(1, "Error\nWrong Resolution", 23);
 			exit(0);
 		}
+		max_resolution(vars);
 	}
 	return (1);
 }
