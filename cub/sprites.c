@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/25 12:58:15 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/29 14:19:49 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,24 +105,35 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 	sprite->position = sprite->pixels_per_degree * sprite->relative;
 	sprite->distance = sqrt(pow(xdist, 2) + pow(ydist, 2));
 	sprite->drawheight = (int)((vars->parser.height / 2) / sprite->distance);
-	sprite->drawwidth = vars->stexture.width * sprite->drawheight / vars->stexture.height;
+	sprite->drawwidth = vars->stexture.width * sprite->drawheight
+	/ vars->stexture.height;
 	return (0);
 }
 
-void	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2)
+void	create_square(t_vars *vars, t_square *square, float x, float y)
 {
-	while (x1 <= x2)
+	vars->stexture.color = ((unsigned int*)vars->stexture.addr)[j * vars->stexture.width + i];
+	square->x1 = x;
+	square->y1 = y;
+	square->x2 = x + sprite->x_inc;
+	square->y2 = y + sprite->y_inc;
+}
+
+void	squares(t_vars *vars, t_sprite *sprite, t_square *square)
+{
+	while (square->x1 <= square->x2)
 	{
-		if (vars->stexture.color != 0xFFFFFF && vars->walls.dist[x1] > sprite->distance)
-			dda_algorithm(&vars->data, x1, y1, x1, y2, vars->stexture.color);
-		x1++;
+		if (vars->stexture.color != 0xFFFFFF && vars->walls.dist[square->x1]
+		> sprite->distance)
+			dda_algorithm(&vars->data, square->x1, square->y1, square->x1,
+			square->y2, vars->stexture.color);
+		square->x1++;
 	}
 }
 
 int		draw_sprites(t_vars *vars, t_sprite *sprite)
 {
-	float	x_inc;
-	float	y_inc;
+	t_square square;
 	float	x;
 	float	y;
 	int		i;
@@ -131,20 +142,20 @@ int		draw_sprites(t_vars *vars, t_sprite *sprite)
 	i = 0;
 	j = 0;
 	x = sprite->position - sprite->drawwidth;
-	x_inc = (sprite->drawwidth * 2) / vars->stexture.width;
-	y_inc = (sprite->drawheight * 2) / vars->stexture.height;
+	sprite->x_inc = (sprite->drawwidth * 2) / vars->stexture.width;
+	sprite->y_inc = (sprite->drawheight * 2) / vars->stexture.height;
 	while (i < vars->stexture.width)
 	{
 		j = 0;
 		y = vars->parser.height / 2 - sprite->drawheight;
 		while (j < vars->stexture.height)
 		{
-			vars->stexture.color = ((unsigned int*)vars->stexture.addr)[j * vars->stexture.width + i];
-			square(vars, sprite, x, y, (x + x_inc), (y + y_inc));
-			y += y_inc;
+			create_square(vars, &square, x, y);
+			squares(vars, sprite, &square);
+			y += sprite->y_inc;
 			j++;
 		}
-		x += x_inc;
+		x += sprite->x_inc;
 		i++;
 	}
 	return (0);

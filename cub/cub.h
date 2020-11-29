@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/24 12:21:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/29 14:20:54 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,15 @@ typedef struct	s_textdata
 	int			color;
 }				t_textdata;
 
+typedef struct	s_square
+{
+	int 		x1;
+	int			y1;
+	int 		x2;
+	int			y2;
+
+}				t_square;
+
 typedef struct	s_sprite
 {
 	float		leftangle;
@@ -130,6 +139,8 @@ typedef struct	s_sprite
 	float		pixels_per_degree;
 	float		x;
 	float		y;
+	float	x_inc;
+	float	y_inc;
 	t_textdata	texture;
 }				t_sprite;
 
@@ -169,8 +180,6 @@ typedef struct	s_vars
 	unsigned long floor;
 }				t_vars;
 
-//extern int map[HEIGHT][WIDTH];
-
 void	ch_mlx_pixel_put(t_img *data, int x, int y, int color);
 void	dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color);
 int		raycasting(t_vars *vars);
@@ -181,7 +190,7 @@ int		key_press(int keycode, t_vars *vars);
 int		key_release(int keycode, t_vars *vars);
 int		x_close(t_vars *vars);
 int		calc_angles(t_vars *vars, t_sprite *sprite);
-void 	square(t_vars *vars, t_sprite *sprite, int x1, int y1, int x2, int y2);
+void 	squares(t_vars *vars, t_sprite *sprite, t_square *square);
 int		draw_sprites(t_vars *vars, t_sprite *sprite);
 void	find_sprites(t_vars *vars);
 int 	sprite_array(t_vars *vars);
@@ -193,7 +202,10 @@ int		resolution(t_vars *vars, char *str);
 int     start_map(t_vars *vars, int fd);
 int     count_map(t_vars *vars, char *str);
 int		check_text(t_vars *vars, char *str, int type);
+int		parse_textures(t_vars *vars, char *str, int type);
 int     init_textures(t_vars *vars, char *str, t_textdata *texture);
+void	flood_fill(t_vars *vars, int x, int y, int prev_pos);
+void	perimeter_check1(t_vars *vars);
 unsigned	long ft_rgbtohex(int r, int g, int b);
 
 

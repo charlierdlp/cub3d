@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 11:58:25 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/27 12:09:27 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/29 12:48:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	max_resolution(t_vars *vars)
 	if (vars->parser.width > 2560)
 		vars->parser.width = 2560;
 	if (vars->parser.height > 1440)
-		vars->parser.height= 1440;
+		vars->parser.height = 1440;
 }
 
 int	resolution(t_vars *vars, char *str)

@@ -6,38 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/25 12:48:27 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/29 13:55:03 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-int	parse_textures(t_vars *vars, char *str, int type)
-{
-	t_textdata	*texture;
-	int			i;
-
-	i = 0;
-	if (type == 5)
-		i = 1;
-	else
-		i = 2;
-	while (ft_isspace(str[i]))
-		i++;
-	check_text(vars, &str[i], type);
-	if (type == 1)
-		texture = &vars->north;
-	else if (type == 2)
-		texture = &vars->south;
-	else if (type == 3)
-		texture = &vars->west;
-	else if (type == 4)
-		texture = &vars->east;
-	else if (type == 5)
-		texture = &vars->stexture;
-	init_textures(vars, &str[i], texture);
-	return (0);
-}
 
 int	find_text(t_vars *vars, char *str, int fd)
 {
