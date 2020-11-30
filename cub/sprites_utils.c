@@ -6,9 +6,29 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 14:00:28 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 14:02:49 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/30 13:41:23 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+void	create_square(t_square *square, float x, float y, t_sprite *sprite)
+{
+	square->x1 = x;
+	square->y1 = y;
+	square->x2 = x + sprite->x_inc;
+	square->y2 = y + sprite->y_inc;
+}
+
+void	squares(t_vars *vars, t_sprite *sprite, t_square *square)
+{
+	while (square->x1 <= square->x2)
+	{
+		if (vars->stexture.color != 0xFFFFFF &&
+		vars->walls.dist[(int)square->x1]
+		> sprite->distance)
+			dda_algorithm(&vars->data, square->x1, square->y1, square->x1,
+			square->y2, vars->stexture.color);
+		square->x1++;
+	}
+}

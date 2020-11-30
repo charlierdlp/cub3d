@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/26 12:19:15 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/30 10:44:50 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int				check_colour(t_vars *vars)
 		&& vars->texture.sky[0] <= 255
 		&& vars->texture.sky[1] >= 0 && vars->texture.sky[1] <= 255
 		&& vars->texture.sky[2] >= 0 && vars->texture.sky[2] <= 255)
-	{	
-	if (vars->texture.floor[0] >= 0 && vars->texture.floor[0] <= 255
+	{
+		if (vars->texture.floor[0] >= 0 && vars->texture.floor[0] <= 255
 		&& vars->texture.floor[1] >= 0 && vars->texture.floor[1] <= 255
 		&& vars->texture.floor[2] >= 0 && vars->texture.floor[2] <= 255)
-		return (1);
+			return (1);
 	}
 	write(1, "Error\nColour", 13);
 	exit(0);

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 14:19:49 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/30 13:32:55 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ void	find_sprites(t_vars *vars)
 	int	j;
 
 	i = 0;
-	j = 0;
 	vars->snumber = 0;
 	while (i < vars->map.height)
 	{
 		j = 0;
-		while (j < vars->map.width)
+		while (vars->map.map[i][j])
 		{
 			if (vars->map.map[i][j] == '2')
 				vars->snumber++;
@@ -39,16 +38,15 @@ int		sprite_array(t_vars *vars)
 	int	j;
 	int k;
 
-	i = 0;
-	j = 0;
+	i = -1;
 	k = 0;
 	find_sprites(vars);
 	if (!(vars->sprite = malloc(vars->snumber * sizeof(t_sprite))))
 		return (0);
-	while (i < vars->map.height)
+	while (++i < vars->map.height)
 	{
-		j = 0;
-		while (j < vars->map.width)
+		j = -1;
+		while (++j < vars->map.width)
 		{
 			if (vars->map.map[i][j] == '2')
 			{
@@ -56,9 +54,7 @@ int		sprite_array(t_vars *vars)
 				vars->sprite[k].y = i + 0.5;
 				k++;
 			}
-			j++;
 		}
-		i++;
 	}
 	if (!(vars->walls.dist = malloc(vars->parser.width * sizeof(float))))
 		return (0);
@@ -110,53 +106,30 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 	return (0);
 }
 
-void	create_square(t_vars *vars, t_square *square, float x, float y)
+void	draw_sprites(t_vars *vars, t_sprite *sprite)
 {
-	vars->stexture.color = ((unsigned int*)vars->stexture.addr)[j * vars->stexture.width + i];
-	square->x1 = x;
-	square->y1 = y;
-	square->x2 = x + sprite->x_inc;
-	square->y2 = y + sprite->y_inc;
-}
+	t_square	square;
+	float		x;
+	float		y;
+	int			i;
+	int			j;
 
-void	squares(t_vars *vars, t_sprite *sprite, t_square *square)
-{
-	while (square->x1 <= square->x2)
-	{
-		if (vars->stexture.color != 0xFFFFFF && vars->walls.dist[square->x1]
-		> sprite->distance)
-			dda_algorithm(&vars->data, square->x1, square->y1, square->x1,
-			square->y2, vars->stexture.color);
-		square->x1++;
-	}
-}
-
-int		draw_sprites(t_vars *vars, t_sprite *sprite)
-{
-	t_square square;
-	float	x;
-	float	y;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
+	i = -1;
 	x = sprite->position - sprite->drawwidth;
 	sprite->x_inc = (sprite->drawwidth * 2) / vars->stexture.width;
 	sprite->y_inc = (sprite->drawheight * 2) / vars->stexture.height;
-	while (i < vars->stexture.width)
+	while (++i < vars->stexture.width)
 	{
-		j = 0;
+		j = -1;
 		y = vars->parser.height / 2 - sprite->drawheight;
-		while (j < vars->stexture.height)
+		while (++j < vars->stexture.height)
 		{
-			create_square(vars, &square, x, y);
+			vars->stexture.color = ((unsigned int*)vars->stexture.addr)
+			[j * vars->stexture.width + i];
+			create_square(&square, x, y, sprite);
 			squares(vars, sprite, &square);
 			y += sprite->y_inc;
-			j++;
 		}
 		x += sprite->x_inc;
-		i++;
 	}
-	return (0);
 }

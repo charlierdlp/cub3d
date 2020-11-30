@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 14:20:54 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/30 14:13:57 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,10 @@ typedef struct	s_textdata
 
 typedef struct	s_square
 {
-	int 		x1;
-	int			y1;
-	int 		x2;
-	int			y2;
+	float		x1;
+	float		y1;
+	float		x2;
+	float		y2;
 
 }				t_square;
 
@@ -139,8 +139,8 @@ typedef struct	s_sprite
 	float		pixels_per_degree;
 	float		x;
 	float		y;
-	float	x_inc;
-	float	y_inc;
+	float		x_inc;
+	float		y_inc;
 	t_textdata	texture;
 }				t_sprite;
 
@@ -191,7 +191,8 @@ int		key_release(int keycode, t_vars *vars);
 int		x_close(t_vars *vars);
 int		calc_angles(t_vars *vars, t_sprite *sprite);
 void 	squares(t_vars *vars, t_sprite *sprite, t_square *square);
-int		draw_sprites(t_vars *vars, t_sprite *sprite);
+void	create_square(t_square *square, float x, float y, t_sprite *sprite);
+void	draw_sprites(t_vars *vars, t_sprite *sprite);
 void	find_sprites(t_vars *vars);
 int 	sprite_array(t_vars *vars);
 void	sort_sarray(t_vars *vars);

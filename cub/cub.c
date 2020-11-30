@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 14:29:22 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/11/30 12:39:58 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,13 @@ void	init_vars(t_vars *vars)
 
 void	mlx_hooks(t_vars *vars)
 {
-	mlx_hook(vars->win, 02, 1L < 0, key_press, &vars);
-	mlx_hook(vars->win, 03, 1L < 0, key_release, &vars);
-	mlx_hook(vars->win, 17, 1L < 0, x_close, &vars);
-	mlx_loop_hook(vars->mlx, raycasting, &vars);
+	mlx_hook(vars->win, 02, 1L < 0, key_press, vars);
+	mlx_hook(vars->win, 03, 1L < 0, key_release, vars);
+	mlx_hook(vars->win, 17, 1L < 0, x_close, vars);
+
+	mlx_loop_hook(vars->mlx, raycasting, vars);
+	printf("%d\n", vars->snumber);
+
 	mlx_loop(vars->mlx);
 }
 
@@ -85,8 +88,8 @@ int		main(int argc, char **argv)
 	vars.data.addr = mlx_get_data_addr(vars.data.img,
 	&vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
 	sprite_array(&vars);
-	vars.pid = fork();
-	if (!vars.pid)
-		playtrack("./music/theme.mp3");
+	//vars.pid = fork();
+	//if (!vars.pid)
+	//	playtrack("./music/theme.mp3");
 	mlx_hooks(&vars);
 }
