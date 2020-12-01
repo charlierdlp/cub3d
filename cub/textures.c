@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 10:08:45 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/20 13:36:53 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/01 13:31:57 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	textures(t_vars *vars, char *path, t_textdata *texture)
 
 int	drawtexture(t_vars *vars, int x)
 {
+	t_dda coords;
 	float	yincrementer;
 	float	y;
 	int		i;
@@ -30,11 +31,13 @@ int	drawtexture(t_vars *vars, int x)
 	i = 0;
 	yincrementer = (vars->walls.height * 2) / vars->texture.height;
 	y = (vars->parser.height / 2) - vars->walls.height;
+	
 	while (i < vars->texture.height)
 	{
+		coords = dda_coor(x, y, x, (y + yincrementer));
 		vars->texture.color = ((unsigned int*)vars->texture.addr)
 		[i * vars->texture.width + vars->texture.texturepositionx];
-		dda_algorithm(&vars->data, x, y, x, (y + yincrementer),
+		dda_algorithm(&vars->data, coords,
 		vars->texture.color);
 		y += yincrementer;
 		i++;

@@ -16,6 +16,7 @@
         "ratio": "c",
         "tuple": "c",
         "utility": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "math.h": "c"
     }
 }

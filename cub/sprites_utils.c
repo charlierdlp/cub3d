@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_utis.c                                      :+:      :+:    :+:   */
+/*   sprites_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 14:00:28 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/30 13:41:23 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/01 13:37:11 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@ void	create_square(t_square *square, float x, float y, t_sprite *sprite)
 
 void	squares(t_vars *vars, t_sprite *sprite, t_square *square)
 {
+	t_dda coords;
 	while (square->x1 <= square->x2)
 	{
 		if (vars->stexture.color != 0xFFFFFF &&
 		vars->walls.dist[(int)square->x1]
 		> sprite->distance)
-			dda_algorithm(&vars->data, square->x1, square->y1, square->x1,
-			square->y2, vars->stexture.color);
+		{
+			coords = dda_coor(square->x1, square->y1, square->x1, square->y2);
+			dda_algorithm(&vars->data, coords, vars->stexture.color);
+		}
 		square->x1++;
 	}
 }

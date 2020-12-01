@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/30 14:13:57 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/01 14:17:32 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,14 @@ typedef struct	s_square
 
 }				t_square;
 
+typedef struct	s_dda
+{
+	int			x0;
+	int			y0;
+	int			x1;
+	int			y1;
+}				t_dda;
+
 typedef struct	s_sprite
 {
 	float		leftangle;
@@ -181,7 +189,7 @@ typedef struct	s_vars
 }				t_vars;
 
 void	ch_mlx_pixel_put(t_img *data, int x, int y, int color);
-void	dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color);
+void	dda_algorithm(t_img *data, t_dda coords, int color);
 int		raycasting(t_vars *vars);
 int		move(t_vars *vars);
 int		drawtexture(t_vars *vars, int x);
@@ -207,6 +215,7 @@ int		parse_textures(t_vars *vars, char *str, int type);
 int     init_textures(t_vars *vars, char *str, t_textdata *texture);
 void	flood_fill(t_vars *vars, int x, int y, int prev_pos);
 void	perimeter_check1(t_vars *vars);
+t_dda   dda_coor(int x0, int y0, int x1, int y1);
 unsigned	long ft_rgbtohex(int r, int g, int b);
 
 

@@ -6,49 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/30 12:42:51 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/01 14:19:48 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-void	ch_mlx_pixel_put(t_img *data, int x, int y, int color)
-{
-	char *dst;
-
-	if (x < 0 || y < 0 || x >= data->width || y >= data->height) //screem height screen width
-		return ;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-void	dda_algorithm(t_img *data, int x0, int y0, int x1, int y1, int color)
-{
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		steps;
-	float	xinc;
-	float	yinc;
-	int		i;
-
-	i = 0;
-	dx = x1 - x0;
-	dy = y1 - y0;
-	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	xinc = dx / (float)steps;
-	yinc = dy / (float)steps;
-	x = x0;
-	y = y0;
-	while (i <= steps)
-	{
-		ch_mlx_pixel_put(data, x, y, color);
-		x += xinc;
-		y += yinc;
-		i++;
-	}
-}
 
 void	wall_check(t_vars *vars)
 {
@@ -91,9 +53,15 @@ void	wall_dist_height(t_vars *vars)
 
 void	paint(t_vars *vars)
 {
-	dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, vars->sky);
+	t_dda coords;
+	coords = dda_coor(vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height);
+	//dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, vars->sky);
+	dda_algorithm(&vars->data, coords, (unsigned int)vars->sky);
 	drawtexture(vars, vars->raycount);
-	dda_algorithm(&vars->data, vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height, vars->floor);
+	//drawtexture(vars, vars->raycount);
+	coords = dda_coor(vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height);
+	//dda_algorithm(&vars->data, vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height, vars->floor);
+	dda_algorithm(&vars->data, coords, vars->floor);
 }
 
 void	init_sprites(t_vars *vars)
