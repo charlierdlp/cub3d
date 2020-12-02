@@ -6,31 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/30 12:39:58 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:31:44 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-void	*ft_play_music(t_vars *vars)
-{
-	if (vars->pid == 0)
-	{
-		system("afplay ./music/theme.mp3");
-		wait(NULL);
-	}
-	return (NULL);
-}
-
-void	playtrack(char *track)
-{
-	char	*args[3];
-
-	args[0] = "afplay";
-	args[1] = track;
-	args[2] = NULL;
-	execvp(args[0], args);
-}
 
 void	init_vars(t_vars *vars)
 {
@@ -61,11 +41,16 @@ void	mlx_hooks(t_vars *vars)
 	mlx_hook(vars->win, 02, 1L < 0, key_press, vars);
 	mlx_hook(vars->win, 03, 1L < 0, key_release, vars);
 	mlx_hook(vars->win, 17, 1L < 0, x_close, vars);
-
 	mlx_loop_hook(vars->mlx, raycasting, vars);
-	printf("%d\n", vars->snumber);
-
 	mlx_loop(vars->mlx);
+}
+
+void	take_colours(t_vars *vars)
+{
+	vars->floor = ft_rgbtohex(vars->texture.floor[0],
+	vars->texture.floor[1], vars->texture.floor[2]);
+	vars->sky = ft_rgbtohex(vars->texture.sky[0],
+	vars->texture.sky[1], vars->texture.sky[2]);
 }
 
 int		main(int argc, char **argv)
@@ -74,11 +59,10 @@ int		main(int argc, char **argv)
 
 	init_vars(&vars);
 	vars.mlx = mlx_init();
+	if (argc == 3 && ft_strncmp(argv[2], "--save", 7))
+		ft_screenshot(&vars);
 	read_text(&vars, argv[1]);
-	vars.floor = ft_rgbtohex(vars.texture.floor[0],
-	vars.texture.floor[1], vars.texture.floor[2]);
-	vars.sky = ft_rgbtohex(vars.texture.sky[0],
-	vars.texture.sky[1], vars.texture.sky[2]);
+	take_colours(&vars);
 	vars.data.width = vars.parser.width;
 	vars.data.height = vars.parser.height;
 	vars.win = mlx_new_window(vars.mlx,

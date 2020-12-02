@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/01 14:19:48 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/02 11:24:30 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	init_sprites(t_vars *vars)
 	}
 }
 
-int	raycasting(t_vars *vars)
+int		raycasting(t_vars *vars)
 {
 	vars->rays.rayangle = vars->player.angle - vars->player.fov / 2;
 	vars->raycount = 0;

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 14:00:28 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/01 13:37:11 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/02 11:25:42 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	create_square(t_square *square, float x, float y, t_sprite *sprite)
 void	squares(t_vars *vars, t_sprite *sprite, t_square *square)
 {
 	t_dda coords;
+
 	while (square->x1 <= square->x2)
 	{
 		if (vars->stexture.color != 0xFFFFFF &&

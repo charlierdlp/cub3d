@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/01 14:17:32 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/02 13:09:46 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@
 # define ESC 53
 # define SPEED 0.1
 
-typedef struct s_colour
+typedef struct	s_colour
 {
-	int 		red;
+	int			red;
 	int			green;
 	int			blue;
 }				t_colour;
@@ -132,6 +132,8 @@ typedef struct	s_dda
 	int			y0;
 	int			x1;
 	int			y1;
+	int			dx;
+	int			dy;
 }				t_dda;
 
 typedef struct	s_sprite
@@ -152,40 +154,40 @@ typedef struct	s_sprite
 	t_textdata	texture;
 }				t_sprite;
 
-typedef struct	s_rays 
+typedef struct	s_rays
 {
-	float 		raycos;
+	float		raycos;
 	float		raysin;
 	float		rayangle;
 }				t_rays;
 
 typedef struct	s_vars
 {
-	void		*mlx;
-	void		*win;
-	float		x;
-	float		y;
-	float		ray;
-	int			raycount;
-	int			dir;
-	int			snumber;
-    int			pid; 
-	t_map		map;
-	t_player	player;
-	t_walls		walls;
-	t_img		data;
-	t_textdata	texture;
-	t_textdata	north;
-	t_textdata	south;
-	t_textdata	west;
-	t_textdata	east;
-	t_textdata	stexture;
-	t_sprite	*sprite;
-	t_keys		keys;
-	t_rays		rays;
-	t_parser	parser;
-	unsigned long sky;
-	unsigned long floor;
+	void			*mlx;
+	void			*win;
+	float			x;
+	float			y;
+	float			ray;
+	int				raycount;
+	int				dir;
+	int				snumber;
+	int				pid;
+	t_map			map;
+	t_player		player;
+	t_walls			walls;
+	t_img			data;
+	t_textdata		texture;
+	t_textdata		north;
+	t_textdata		south;
+	t_textdata		west;
+	t_textdata		east;
+	t_textdata		stexture;
+	t_sprite		*sprite;
+	t_keys			keys;
+	t_rays			rays;
+	t_parser		parser;
+	unsigned long	sky;
+	unsigned long	floor;
 }				t_vars;
 
 void	ch_mlx_pixel_put(t_img *data, int x, int y, int color);
@@ -198,7 +200,7 @@ int		key_press(int keycode, t_vars *vars);
 int		key_release(int keycode, t_vars *vars);
 int		x_close(t_vars *vars);
 int		calc_angles(t_vars *vars, t_sprite *sprite);
-void 	squares(t_vars *vars, t_sprite *sprite, t_square *square);
+void	squares(t_vars *vars, t_sprite *sprite, t_square *square);
 void	create_square(t_square *square, float x, float y, t_sprite *sprite);
 void	draw_sprites(t_vars *vars, t_sprite *sprite);
 void	find_sprites(t_vars *vars);
@@ -217,6 +219,7 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_pos);
 void	perimeter_check1(t_vars *vars);
 t_dda   dda_coor(int x0, int y0, int x1, int y1);
 unsigned	long ft_rgbtohex(int r, int g, int b);
-
+void	*ft_play_music(t_vars *vars);
+void	playtrack(char *track);
 
 #endif
