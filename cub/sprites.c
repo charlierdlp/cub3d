@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/30 13:32:55 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:20:09 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 	sprite->pixels_per_degree = vars->parser.width / vars->player.fov;
 	sprite->angle = atan2(ydist, xdist) * 180 / M_PI;
 	sprite->relative = sprite->angle - sprite->leftangle;
-	sprite->relative += (sprite->relative < 0) ? 360 : 0;
+	if (sprite->relative > 0 || sprite->relative < -30)
+		sprite->relative += (sprite->relative < 0) ? 360 : 0;
 	sprite->position = sprite->pixels_per_degree * sprite->relative;
 	sprite->distance = sqrt(pow(xdist, 2) + pow(ydist, 2));
 	sprite->drawheight = (int)((vars->parser.height / 2) / sprite->distance);

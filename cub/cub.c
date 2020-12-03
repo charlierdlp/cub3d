@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/02 13:31:44 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:36:06 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_vars(t_vars *vars)
 	vars->player.angle = 0;
 	vars->player.x = 0;
 	vars->player.y = 0;
-	vars->player.rotation = 5;
+	vars->player.rotation = 3;
 	vars->keys.w = 0;
 	vars->keys.a = 0;
 	vars->keys.d = 0;
@@ -59,16 +59,20 @@ int		main(int argc, char **argv)
 
 	init_vars(&vars);
 	vars.mlx = mlx_init();
-	if (argc == 3 && ft_strncmp(argv[2], "--save", 7))
-		ft_screenshot(&vars);
 	read_text(&vars, argv[1]);
 	take_colours(&vars);
 	vars.data.width = vars.parser.width;
 	vars.data.height = vars.parser.height;
-	vars.win = mlx_new_window(vars.mlx,
-	vars.parser.width, vars.parser.height, "Hello World");
+	if (argc < 3)
+		vars.win = mlx_new_window(vars.mlx,
+		vars.parser.width, vars.parser.height, "Hello World");
 	vars.data.img = mlx_new_image(vars.mlx,
 	vars.parser.width, vars.parser.height);
+	if (argc == 3 && !ft_strncmp(argv[2], "--save", 7))
+	{
+		ft_screenshot(&vars);
+		return(0);
+	}
 	vars.data.addr = mlx_get_data_addr(vars.data.img,
 	&vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
 	sprite_array(&vars);

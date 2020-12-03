@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/02 13:09:46 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/03 14:03:15 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,10 @@ typedef struct	s_textdata
 
 typedef struct	s_square
 {
-	float		x1;
-	float		y1;
-	float		x2;
-	float		y2;
+	int		x1;
+	int		y1;
+	int		x2;
+	int		y2;
 
 }				t_square;
 
@@ -221,5 +221,6 @@ t_dda   dda_coor(int x0, int y0, int x1, int y1);
 unsigned	long ft_rgbtohex(int r, int g, int b);
 void	*ft_play_music(t_vars *vars);
 void	playtrack(char *track);
+int     ft_screenshot(t_vars *vars);
 
 #endif
