@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:16:31 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/03 14:16:40 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/04 14:17:29 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int     ft_screenshot(t_vars *vars)
     unsigned    char    header[54];
     int         fd;
     int         i;
+    int j;
 
+j = 0;
     i = 0;
     fd = open("./screenshot.bmp", O_WRONLY | O_CREAT, 0777);
     vars->data.addr = mlx_get_data_addr(vars->data.img,
@@ -41,12 +43,20 @@ int     ft_screenshot(t_vars *vars)
     ft_int_to_bytes(header + 18, vars->parser.width);
 	ft_int_to_bytes(header + 22, vars->parser.height);
     header[26] = (unsigned char)1;
-    header[26] = (unsigned char)1;
+	header[28] = (unsigned char)24;
     write(fd, header, 54);
-    i = vars->parser.width * vars->parser.height - 1;
-	while (i > 0)
+    i = vars->parser.height - 1;
+	while (i >= 0)
 	{
-		write(fd, &vars->data.addr[i], 3);
+		j = 0;
+		while (j < vars->parser.width)
+		{
+			if (write(fd, &(((unsigned int *)vars->data.addr)[i * vars->parser.height + j]), 3) == -1)
+				return (0);
+			j++;
+		}
 		i--;
 	}
+    close(fd);
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/03 14:03:15 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/04 12:24:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ typedef struct	s_square
 	int		y1;
 	int		x2;
 	int		y2;
-
 }				t_square;
 
 typedef struct	s_dda
