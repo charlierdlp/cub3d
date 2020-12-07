@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/04 13:08:43 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:24:24 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	sort_sarray(t_vars *vars)
 	}
 }
 
-int		calc_angles(t_vars *vars, t_sprite *sprite)
+void	calc_angles(t_vars *vars, t_sprite *sprite)
 {
 	float xdist;
 	float ydist;
@@ -97,14 +97,13 @@ int		calc_angles(t_vars *vars, t_sprite *sprite)
 	sprite->pixels_per_degree = vars->parser.width / vars->player.fov;
 	sprite->angle = atan2(ydist, xdist) * 180 / M_PI;
 	sprite->relative = sprite->angle - sprite->leftangle;
-	if (sprite->relative > 0 || sprite->relative < -30) 
+	if (sprite->relative > 0 || sprite->relative < -30)
 		sprite->relative += (sprite->relative < 0) ? 360 : 0;
 	sprite->position = sprite->pixels_per_degree * sprite->relative;
 	sprite->distance = sqrt(pow(xdist, 2) + pow(ydist, 2));
 	sprite->drawheight = (int)((vars->parser.height / 2) / sprite->distance);
 	sprite->drawwidth = vars->stexture.width * sprite->drawheight
 	/ vars->stexture.height;
-	return (0);
 }
 
 void	draw_sprites(t_vars *vars, t_sprite *sprite)
@@ -130,14 +129,6 @@ void	draw_sprites(t_vars *vars, t_sprite *sprite)
 			vars->stexture.color = ((unsigned int*)vars->stexture.addr)
 			[j * vars->stexture.width + i];
 			create_square(&square, x, y, sprite);
-		//	printf("%f\n", vars->walls.dist[0]);
-		/*	printf("leftangle: %f\n", sprite->leftangle);
-			printf("angle: %f\n", sprite->angle);
-			printf("relative: %f\n", sprite->relative);
-			printf("position: %f\n", sprite->position);
-			printf("distance: %f\n", sprite->distance);
-			printf("x: %f\n\n", x);*/
-//			printf("%d, %d, %d, %d\n", square.x1, square.x2, square.y1, square.y2);
 			squares(vars, sprite, &square);
 			y += sprite->y_inc;
 		}

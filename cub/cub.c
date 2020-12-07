@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/03 13:36:06 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:59:21 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_vars(t_vars *vars)
 	vars->parser.width = 0;
 	vars->parser.height = 0;
 	vars->map.start = 0;
+	vars->screenshot = 0;
 }
 
 void	mlx_hooks(t_vars *vars)
@@ -70,14 +71,13 @@ int		main(int argc, char **argv)
 	vars.parser.width, vars.parser.height);
 	if (argc == 3 && !ft_strncmp(argv[2], "--save", 7))
 	{
+		vars.screenshot = 1;
 		ft_screenshot(&vars);
-		return(0);
+		return (0);
 	}
 	vars.data.addr = mlx_get_data_addr(vars.data.img,
 	&vars.data.bits_per_pixel, &vars.data.line_length, &vars.data.endian);
 	sprite_array(&vars);
-	//vars.pid = fork();
-	//if (!vars.pid)
-	//	playtrack("./music/theme.mp3");
+	start_music(&vars);
 	mlx_hooks(&vars);
 }

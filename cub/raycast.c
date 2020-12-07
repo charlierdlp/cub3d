@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/04 14:17:55 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:22:01 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,27 @@ void	wall_check(t_vars *vars)
 void	wall_dist_height(t_vars *vars)
 {
 	wall_check(vars);
-	vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2) + pow(vars->player.y - vars->y, 2));
+	vars->walls.distance = sqrt(pow(vars->player.x - vars->x, 2)
+	+ pow(vars->player.y - vars->y, 2));
 	vars->walls.dist[vars->raycount] = vars->walls.distance;
-	vars->walls.distance = vars->walls.distance * cos((vars->rays.rayangle - vars->player.angle) * M_PI / 180);
-	vars->walls.height = (int)((vars->parser.height / 2) / vars->walls.distance);
-	vars->texture.texturepositionx = floor(fmod(vars->texture.width * (vars->x + vars->y), vars->texture.width));
+	vars->walls.distance = vars->walls.distance *
+	cos((vars->rays.rayangle - vars->player.angle) * M_PI / 180);
+	vars->walls.height = (int)((vars->parser.height / 2) /
+	vars->walls.distance);
+	vars->texture.texturepositionx = floor(fmod(vars->texture.width *
+	(vars->x + vars->y), vars->texture.width));
 }
 
 void	paint(t_vars *vars)
 {
 	t_dda coords;
-	coords = dda_coor(vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height);
-	//dda_algorithm(&vars->data, vars->raycount, 0, vars->raycount, vars->parser.height / 2 - vars->walls.height, vars->sky);
+
+	coords = dda_coor(vars->raycount, 0, vars->raycount, vars->parser.height
+	/ 2 - vars->walls.height);
 	dda_algorithm(&vars->data, coords, (unsigned int)vars->sky);
 	drawtexture(vars, vars->raycount);
-	//drawtexture(vars, vars->raycount);
-	coords = dda_coor(vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height);
-	//dda_algorithm(&vars->data, vars->raycount, vars->parser.height / 2 + vars->walls.height, vars->raycount, vars->parser.height, vars->floor);
+	coords = dda_coor(vars->raycount, vars->parser.height / 2
+	+ vars->walls.height, vars->raycount, vars->parser.height);
 	dda_algorithm(&vars->data, coords, vars->floor);
 }
 
@@ -100,6 +104,7 @@ int		raycasting(t_vars *vars)
 		vars->raycount += 1;
 	}
 	init_sprites(vars);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
+	if (vars->screenshot == 0)
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->data.img, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/04 12:24:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:58:50 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct	s_vars
 	int				dir;
 	int				snumber;
 	int				pid;
+	int				screenshot;
 	t_map			map;
 	t_player		player;
 	t_walls			walls;
@@ -198,7 +199,7 @@ int		textures(t_vars *vars, char *path, t_textdata *texture);
 int		key_press(int keycode, t_vars *vars);
 int		key_release(int keycode, t_vars *vars);
 int		x_close(t_vars *vars);
-int		calc_angles(t_vars *vars, t_sprite *sprite);
+void	calc_angles(t_vars *vars, t_sprite *sprite);
 void	squares(t_vars *vars, t_sprite *sprite, t_square *square);
 void	create_square(t_square *square, float x, float y, t_sprite *sprite);
 void	draw_sprites(t_vars *vars, t_sprite *sprite);
@@ -221,5 +222,6 @@ unsigned	long ft_rgbtohex(int r, int g, int b);
 void	*ft_play_music(t_vars *vars);
 void	playtrack(char *track);
 int     ft_screenshot(t_vars *vars);
+void	start_music(t_vars *vars);
 
 #endif

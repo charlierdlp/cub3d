@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:32:36 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 14:23:47 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/07 13:51:08 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ int		parse_textures(t_vars *vars, char *str, int type)
 	else if (type == 5)
 		texture = &vars->stexture;
 	init_textures(vars, &str[i], texture);
-	return (0);
+	return (1);
 }
