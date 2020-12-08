@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:22:06 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/07 13:24:24 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/08 12:47:10 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	calc_angles(t_vars *vars, t_sprite *sprite)
 	sprite->pixels_per_degree = vars->parser.width / vars->player.fov;
 	sprite->angle = atan2(ydist, xdist) * 180 / M_PI;
 	sprite->relative = sprite->angle - sprite->leftangle;
-	if (sprite->relative > 0 || sprite->relative < -30)
+	//if (sprite->relative > 0 || sprite->relative < -30)
 		sprite->relative += (sprite->relative < 0) ? 360 : 0;
 	sprite->position = sprite->pixels_per_degree * sprite->relative;
 	sprite->distance = sqrt(pow(xdist, 2) + pow(ydist, 2));
@@ -106,15 +106,13 @@ void	calc_angles(t_vars *vars, t_sprite *sprite)
 	/ vars->stexture.height;
 }
 
-void	draw_sprites(t_vars *vars, t_sprite *sprite)
+void	draw_sprites(t_vars *vars, t_sprite *sprite, int i)
 {
 	t_square	square;
 	float		x;
 	float		y;
-	int			i;
 	int			j;
 
-	i = -1;
 	x = sprite->position - sprite->drawwidth;
 	if (x < -1000 || x > vars->parser.width)
 		return ;

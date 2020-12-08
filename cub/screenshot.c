@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:16:31 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/07 13:39:46 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/08 11:49:05 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int		ft_screenshot(t_vars *vars)
 	ft_bzero(header, 54);
 	header[0] = (unsigned char)'B';
 	header[1] = (unsigned char)'M';
-	ft_int_to_bytes(header + 2, 54 + (3 * vars->parser.width * vars->parser.height) + ((4 - (vars->parser.width * 3) % 4) % 4 * vars->parser.height));
+	ft_int_to_bytes(header + 2, 54 +
+	(3 * vars->parser.width * vars->parser.height) +
+	((4 - (vars->parser.width * 3) % 4) % 4 * vars->parser.height));
 	header[10] = (unsigned char)54;
 	header[14] = (unsigned char)40;
 	ft_int_to_bytes(header + 18, vars->parser.width);

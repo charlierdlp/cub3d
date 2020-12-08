@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:32:36 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/07 13:51:08 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/08 12:39:05 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int		parse_textures(t_vars *vars, char *str, int type)
 		i = 1;
 	else
 		i = 2;
+	if (!ft_isspace(str[i]))
+		exit_error("Error\nWrong Texture\n");
 	while (ft_isspace(str[i]))
 		i++;
 	check_text(vars, &str[i], type);

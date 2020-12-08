@@ -6,13 +6,13 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 11:58:25 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 12:48:03 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/08 12:27:06 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	empty_line(char *str)
+int		empty_line(char *str)
 {
 	int i;
 
@@ -34,54 +34,45 @@ void	max_resolution(t_vars *vars)
 		vars->parser.height = 1440;
 }
 
-int	resolution(t_vars *vars, char *str)
+void	fill_resolution(t_vars *vars, char *str, int type)
 {
-	int i;
-	int both;
+	if (type == 0)
+	{
+		if (ft_isdigit(str[0]))
+			vars->parser.width = ft_atoi(str);
+	}
+	if (type == 1)
+	{
+		if (ft_isdigit(str[0]))
+			vars->parser.height = ft_atoi(str);
+	}
+}
 
-	both = 2;
-	i = 0;
+int		resolution(t_vars *vars, char *str, int i)
+{
 	if (vars->parser.width == 0 && vars->parser.height == 0)
 	{
-		i++;
 		while (ft_isspace(str[i]))
 			i++;
 		if (!ft_isdigit(str[i]))
 			return (0);
 		while (ft_isspace(str[i]))
 			i++;
-		if (ft_isdigit(str[i]))
-		{
-			vars->parser.width = ft_atoi(&str[i]);
-			both = 1;
-		}
+		fill_resolution(vars, &str[i], 0);
 		while (ft_isdigit(str[i]))
 			i++;
 		if (!ft_isspace(str[i]))
-		{
-			write(1, "Error\nWrong Resolution", 23);
-			exit(0);
-		}
+			exit_error("Error\nWrong Resolution");
 		while (ft_isspace(str[i]))
 			i++;
-		if (ft_isdigit(str[i]))
-		{
-			vars->parser.height = ft_atoi(&str[i]);
-			both = 2;
-		}
+		fill_resolution(vars, &str[i], 1);
 		while (ft_isdigit(str[i]))
 			i++;
 		if (!empty_line(&str[i]))
-		{
-			write(1, "Error\nWrong Resolution", 23);
-			exit(0);
-		}
-		if (both != 2)
-		{
-			write(1, "Error\nWrong Resolution", 23);
-			exit(0);
-		}
+			exit_error("Error\nWrong Resolution");
 		max_resolution(vars);
 	}
+	if (vars->parser.width <= 0 || vars->parser.height <= 0)
+		exit_error("Error\nWrong Resolution");
 	return (1);
 }

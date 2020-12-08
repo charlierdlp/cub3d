@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/07 13:51:21 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:40:06 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int				check_colour(t_vars *vars)
 		&& vars->texture.floor[2] >= 0 && vars->texture.floor[2] <= 255)
 			return (1);
 	}
-	write(1, "Error\nColour", 13);
-	exit(0);
+	exit_error("Error\nColour");
 	return (0);
 }
 

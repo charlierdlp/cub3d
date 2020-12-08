@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 13:03:15 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/07 13:22:01 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/08 12:31:22 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	init_sprites(t_vars *vars)
 	i = 0;
 	while (i < vars->snumber)
 	{
-		draw_sprites(vars, &vars->sprite[i]);
+		draw_sprites(vars, &vars->sprite[i], -1);
 		i++;
 	}
 }
