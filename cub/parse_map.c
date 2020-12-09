@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/30 13:43:35 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/09 12:07:19 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int		spawn(t_vars *vars, int y, int x)
 {
+	vars->player.y = ((float)y) + 0.5;
+	vars->player.x = ((float)x) + 0.5;
 	if (vars->map.map[y][x] == 'N')
 		vars->player.angle = 270;
 	else if (vars->map.map[y][x] == 'S')
@@ -27,31 +29,31 @@ int		spawn(t_vars *vars, int y, int x)
 
 void	recheck_map(t_vars *vars)
 {
+	int	control;
 	int	y;
 	int	x;
 
 	y = 0;
+	control = 0;
 	while (y < vars->map.height)
 	{
 		x = 0;
 		while (vars->map.map[y][x])
 		{
-			if (ft_strchr("NWSE", vars->map.map[y][x]))
+			if (ft_strchr("NWSE", vars->map.map[y][x]) && control == 0)
 			{
 				spawn(vars, y, x);
-				vars->player.y = ((float)y) + 0.5;
-				vars->player.x = ((float)x) + 0.5;
+				control = 1;
 				vars->map.map[y][x] = '0';
 			}
+			else if (ft_strchr("NWSE", vars->map.map[y][x]) && control == 1)
+				exit_error("Error\nDouble Player\n");
 			x++;
 		}
 		y++;
 	}
 	if (vars->player.x == 0 && vars->player.y == 0)
-	{
-		write(1, "Error\nNo Player", 16);
-		exit(0);
-	}
+		exit_error("Error\nNo Player\n");
 }
 
 int		jump(t_vars *vars, char *str)

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/08 13:40:06 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/09 12:27:26 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int				colour_save(t_vars *vars, char *str, int type, char differ)
 
 int				fill(t_vars *vars, char *str, char differ, int type)
 {
-	int i;
-
-	if ((!colour_save(vars, &str[i], type, differ)))
+	if (!ft_isdigit(str[0]))
+		exit_error("Error\nWrong Colour\n");
+	if ((!colour_save(vars, str, type, differ)))
 		return (0);
 	return (1);
 }

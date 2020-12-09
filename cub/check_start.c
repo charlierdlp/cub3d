@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/08 12:43:18 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/09 11:22:56 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exit_error(char *str)
 	exit(0);
 }
 
-int		find_text(t_vars *vars, char *str, int fd)
+int		find_text(t_vars *vars, char *str)
 {
 	int			i;
 
@@ -78,10 +78,10 @@ int		read_file(t_vars *vars, int fd)
 
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
-		find_text(vars, line, fd);
+		find_text(vars, line);
 		free(line);
 	}
-	find_text(vars, line, fd);
+	find_text(vars, line);
 	free(line);
 	return (0);
 }

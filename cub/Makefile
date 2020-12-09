@@ -3,7 +3,7 @@ OBJS        = ${SRCS:.c=.o}
 NAME        = cub3D
 CC          = cc
 RM          = rm -f
-#CFLAGS      = -Wall -Werror -Wextra
+CFLAGS      = -Wall -Werror -Wextra
 FRAMEWORK   = -lz -L . -lmlx -lft -framework OpenGL -framework AppKit
 .c.o:
 			${CC} ${CFLAGS} -g -c $< -o ${<:.c=.o}
@@ -12,7 +12,7 @@ ${NAME}:    ${OBJS}
 			${MAKE} -C ./libft
 			mv ./minilibx/libmlx.a .
 			mv ./libft/libft.a .
-			${CC} -fsanitize=address -g -o ${NAME} ${OBJS} ${FRAMEWORK}
+			${CC} -o ${NAME} ${OBJS} ${FRAMEWORK}
 all:        ${NAME}
 clean:
 			${RM} ${OBJS}

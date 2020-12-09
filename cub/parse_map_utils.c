@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 12:53:18 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/29 13:09:32 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/09 13:08:55 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	perimeter_check2(t_vars *vars)
 	while (i < vars->map.height)
 	{
 		if (vars->map.map[y][0] == 'M'
-		|| vars->map.map[y][ft_strlen(vars->map.map[0]) - 1] == 'M'
+		|| vars->map.map[y][ft_strlen(vars->map.map[i]) - 1] == 'M'
 		|| vars->map.map[y][0] == '2'
-		|| vars->map.map[y][ft_strlen(vars->map.map[0]) - 1] == '2')
+		|| vars->map.map[y][ft_strlen(vars->map.map[i]) - 1] == '2')
 		{
 			write(1, "Error\nOpen Map", 15);
 			exit(0);
@@ -79,8 +79,8 @@ void	perimeter_check2(t_vars *vars)
 
 void	perimeter_check1(t_vars *vars)
 {
-	int	i;
-	int	x;
+	size_t	i;
+	int		x;
 
 	i = 0;
 	x = 0;

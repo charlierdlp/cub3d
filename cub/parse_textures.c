@@ -6,13 +6,13 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:32:36 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/08 12:39:05 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/09 12:02:40 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int		check_extension(t_vars *vars, char *str)
+int		check_extension(char *str)
 {
 	if (!ft_strrchr(str, '.'))
 	{
@@ -62,13 +62,13 @@ int		init_textures(t_vars *vars, char *str, t_textdata *texture)
 		write(1, "Error\nWrong Texture", 20);
 		exit(0);
 	}
-	check_extension(vars, str);
+	check_extension(str);
 	texture->img = mlx_xpm_file_to_image(vars->mlx, str,
 	&texture->width, &texture->height);
 	if (!(texture->img))
 	{
 		write(1, "Error\nWrong img", 16);
-		return (0);
+		exit(0);
 	}
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
 	&texture->line_length, &texture->endian);
@@ -98,7 +98,7 @@ int		parse_textures(t_vars *vars, char *str, int type)
 		texture = &vars->west;
 	else if (type == 4)
 		texture = &vars->east;
-	else if (type == 5)
+	else
 		texture = &vars->stexture;
 	init_textures(vars, &str[i], texture);
 	return (1);
