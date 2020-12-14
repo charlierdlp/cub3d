@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/07 13:59:21 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 13:45:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ void	init_vars(t_vars *vars)
 	vars->parser.height = 0;
 	vars->map.start = 0;
 	vars->screenshot = 0;
+	vars->texture.sky[0] = -1;
+	vars->texture.sky[1] = -1;
+	vars->texture.sky[2] = -1;
+	vars->texture.floor[0] = -1;
+	vars->texture.floor[1] = -1;
+	vars->texture.floor[2] = -1;
 }
 
 void	mlx_hooks(t_vars *vars)
@@ -54,10 +60,23 @@ void	take_colours(t_vars *vars)
 	vars->texture.sky[1], vars->texture.sky[2]);
 }
 
+void	arguments(int argc, char **argv)
+{
+	if (argc < 2 || argc > 3)
+		exit_error("Error\nWrong Arguments\n");
+	if (argc == 3 && ft_strncmp(argv[2], "--save", 7))
+		exit_error("Error\nExpected \"--save\" argument\n");
+	if (!ft_strrchr(argv[1], '.'))
+		exit_error("Error\nWrong Map");
+	if (ft_strncmp(argv[1] + (ft_strlen(argv[1]) - 4), ".cub", 4))
+		exit_error("Error\nWrong Map");
+}
+
 int		main(int argc, char **argv)
 {
 	t_vars vars;
 
+	arguments(argc, argv);
 	init_vars(&vars);
 	vars.mlx = mlx_init();
 	read_text(&vars, argv[1]);

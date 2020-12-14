@@ -6,25 +6,11 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/09 12:27:26 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:28:33 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-/*
-** unsigned	long ft_rgbtohex(int rgb[3])
-** {
-** 	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
-** 		return (0 << 16 | 0 << 8 | 0);
-** 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
-** }
-*/
-
-unsigned long	ft_rgbtohex(int r, int g, int b)
-{
-	return ((r << 16) + (g << 8) + b);
-}
 
 int				check_colour(t_vars *vars)
 {
@@ -38,7 +24,7 @@ int				check_colour(t_vars *vars)
 		&& vars->texture.floor[2] >= 0 && vars->texture.floor[2] <= 255)
 			return (1);
 	}
-	exit_error("Error\nColour");
+	exit_error("Error\nWrong Colour\n");
 	return (0);
 }
 
@@ -76,6 +62,14 @@ int				fill(t_vars *vars, char *str, char differ, int type)
 	return (1);
 }
 
+void			find_comma(char *str, int *i)
+{
+	while (ft_isdigit(str[*i]))
+		*i += 1;
+	if (str[*i] == ',')
+		*i += 1;
+}
+
 int				is_colour(t_vars *vars, char *str)
 {
 	int		i;
@@ -88,18 +82,19 @@ int				is_colour(t_vars *vars, char *str)
 	i++;
 	while (ft_isspace(str[i]))
 		i++;
+	if ((differ == 'C' && (vars->texture.sky[0] != -1
+	&& vars->texture.sky[1] != -1 && vars->texture.sky[2] != -1)) ||
+	(differ == 'F' && (vars->texture.floor[0] != -1
+	&& vars->texture.floor[1] != -1 && vars->texture.floor[2] != -1)))
+			exit_error("Error\nDouble sky/floor?\n");
 	fill(vars, &str[i], differ, 0);
-	while (ft_isdigit(str[i]))
-		i++;
-	if (str[i] == ',')
-		i++;
+	find_comma(str, &i);
 	fill(vars, &str[i], differ, 1);
+	find_comma(str, &i);
+	fill(vars, &str[i], differ, 2);
 	while (ft_isdigit(str[i]))
 		i++;
 	if (str[i] == ',')
-		i++;
-	fill(vars, &str[i], differ, 2);
-	if ((!check_colour(vars)))
-		return (0);
+		exit_error("Error\nWhat's with the comma?\n");
 	return (1);
 }

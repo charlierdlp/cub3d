@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:42:17 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/09 11:22:56 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:21:27 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		find_text2(t_vars *vars, char *str, int i)
 	{
 		if (!ft_isspace(str[i + 1]))
 			exit_error("Error\nWrong Resolution\n");
-		return (resolution(vars, &str[i], 1));
+		resolution(vars, &str[i], 1);
 	}
 	else if (str[i] == 'F' || str[i] == 'C')
 	{
@@ -36,7 +36,7 @@ int		find_text2(t_vars *vars, char *str, int i)
 			exit_error("Error\nWrong Colour\n");
 		return (is_colour(vars, &str[i]));
 	}
-	return (0);
+	return(0);
 }
 
 void	exit_error(char *str)
@@ -83,6 +83,11 @@ int		read_file(t_vars *vars, int fd)
 	}
 	find_text(vars, line);
 	free(line);
+	check_colour(vars);
+	if (vars->north.path == NULL || vars->south.path == NULL || vars->east.path 
+	== NULL || vars->west.path == NULL || vars->stexture.path == NULL || vars->parser.width == 0
+	|| vars->parser.height == 0)
+		exit_error("Error\nMissing Info\n");
 	return (0);
 }
 

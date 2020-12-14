@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/08 12:49:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:20:11 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct		s_map
 	int				height;
 	int				current;
 	int				start;
+	int				c;
 }					t_map;
 
 typedef struct		s_keys
@@ -210,7 +211,7 @@ void				sort_sarray(t_vars *vars);
 int					read_text(t_vars *vars, char *file);
 int					is_colour(t_vars *vars, char *str);
 int					empty_line(char *str);
-int					resolution(t_vars *vars, char *str, int i);
+void				resolution(t_vars *vars, char *str, int i);
 int					start_map(t_vars *vars, int fd);
 int					count_map(t_vars *vars, char *str);
 int					check_text(t_vars *vars, char *str, int type);
@@ -225,5 +226,6 @@ void				playtrack(char *track);
 int					ft_screenshot(t_vars *vars);
 void				start_music(t_vars *vars);
 void				exit_error(char *str);
+int					check_colour(t_vars *vars);
 
 #endif

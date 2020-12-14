@@ -6,13 +6,13 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 12:53:18 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/09 13:08:55 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/11 12:30:11 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int		count_map(t_vars *vars, char *str)
+int				count_map(t_vars *vars, char *str)
 {
 	int	i;
 	int	length;
@@ -31,7 +31,7 @@ int		count_map(t_vars *vars, char *str)
 	return (0);
 }
 
-void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
+void			flood_fill(t_vars *vars, int x, int y, int prev_pos)
 {
 	int	i;
 
@@ -55,7 +55,7 @@ void	flood_fill(t_vars *vars, int x, int y, int prev_pos)
 	flood_fill(vars, x, y - 1, prev_pos);
 }
 
-void	perimeter_check2(t_vars *vars)
+void			perimeter_check2(t_vars *vars)
 {
 	int	i;
 	int	y;
@@ -77,7 +77,7 @@ void	perimeter_check2(t_vars *vars)
 	}
 }
 
-void	perimeter_check1(t_vars *vars)
+void			perimeter_check1(t_vars *vars)
 {
 	size_t	i;
 	int		x;
@@ -98,4 +98,18 @@ void	perimeter_check1(t_vars *vars)
 		i++;
 	}
 	perimeter_check2(vars);
+}
+
+/*
+** unsigned	long ft_rgbtohex(int rgb[3])
+** {
+** 	if (rgb[0] < 0 || rgb[1] < 0 || rgb[2] < 0)
+** 		return (0 << 16 | 0 << 8 | 0);
+** 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+** }
+*/
+
+unsigned long	ft_rgbtohex(int r, int g, int b)
+{
+	return ((r << 16) + (g << 8) + b);
 }

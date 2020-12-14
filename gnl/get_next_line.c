@@ -6,10 +6,9 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/23 11:13:04 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/11/19 12:47:37 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/10 11:51:23 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "get_next_line.h"
 #define BUFFER_SIZE 1000

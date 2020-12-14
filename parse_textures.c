@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:32:36 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/09 12:02:40 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:15:27 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int		save_path(t_vars *vars, int type, char *str)
 		vars->west.path = ft_strtrim(str, " ");
 	else if (type == 5 && vars->stexture.path == NULL)
 		vars->stexture.path = ft_strtrim(str, " ");
+	else
+		exit_error("Error\nWrong Texture\n");
 	return (1);
 }
 
@@ -50,6 +52,7 @@ int		check_text(t_vars *vars, char *str, int type)
 	if (!ft_isascii(str[i]))
 		return (0);
 	save_path(vars, type, &str[i]);
+
 	return (0);
 }
 

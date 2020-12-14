@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 13:03:21 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/09 12:07:19 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 11:41:42 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,33 @@ int		spawn(t_vars *vars, int y, int x)
 		vars->player.angle = 0;
 	else if (vars->map.map[y][x] == 'W')
 		vars->player.angle = 180;
+	vars->map.map[y][x] = '0';
 	return (0);
 }
 
 void	recheck_map(t_vars *vars)
 {
-	int	control;
 	int	y;
 	int	x;
 
-	y = 0;
-	control = 0;
-	while (y < vars->map.height)
+	y = -1;
+	while (++y < vars->map.height)
 	{
-		x = 0;
-		while (vars->map.map[y][x])
+		x = -1;
+		while (vars->map.map[y][++x])
 		{
-			if (ft_strchr("NWSE", vars->map.map[y][x]) && control == 0)
+			if (vars->map.map[y][x] == ' ')
+				vars->map.map[y][x] = '0';
+			if (ft_strchr("NWSE", vars->map.map[y][x]) && vars->map.c == 0)
 			{
 				spawn(vars, y, x);
-				control = 1;
-				vars->map.map[y][x] = '0';
+				vars->map.c = 1;
 			}
-			else if (ft_strchr("NWSE", vars->map.map[y][x]) && control == 1)
+			else if (ft_strchr("NWSE", vars->map.map[y][x]) && vars->map.c == 1)
 				exit_error("Error\nDouble Player\n");
-			x++;
+			else if (!ft_strchr("NWSE012 ", vars->map.map[y][x]))
+				exit_error("Error\nWrong Map!\n");
 		}
-		y++;
 	}
 	if (vars->player.x == 0 && vars->player.y == 0)
 		exit_error("Error\nNo Player\n");
@@ -100,6 +100,7 @@ int		start_map(t_vars *vars, int fd)
 	char	*line;
 	int		i;
 
+	vars->map.c = 0;
 	vars->map.map = malloc(sizeof(char *) * vars->map.height * vars->map.width);
 	vars->map.current = 0;
 	while ((i = get_next_line(fd, &line)) > 0)

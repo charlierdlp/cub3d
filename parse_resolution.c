@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 11:58:25 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/08 12:27:06 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/14 14:21:53 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	fill_resolution(t_vars *vars, char *str, int type)
 	}
 }
 
-int		resolution(t_vars *vars, char *str, int i)
+void		resolution(t_vars *vars, char *str, int i)
 {
 	if (vars->parser.width == 0 && vars->parser.height == 0)
 	{
 		while (ft_isspace(str[i]))
 			i++;
 		if (!ft_isdigit(str[i]))
-			return (0);
+			exit_error("Error\nWrong Resolution");
 		while (ft_isspace(str[i]))
 			i++;
 		fill_resolution(vars, &str[i], 0);
@@ -72,7 +72,8 @@ int		resolution(t_vars *vars, char *str, int i)
 			exit_error("Error\nWrong Resolution");
 		max_resolution(vars);
 	}
+	else
+		exit_error("Error\nDouble Resolution");
 	if (vars->parser.width <= 0 || vars->parser.height <= 0)
 		exit_error("Error\nWrong Resolution");
-	return (1);
 }
