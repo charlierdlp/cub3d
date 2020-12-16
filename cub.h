@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:47:46 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/14 14:20:11 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:53:02 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,5 +227,6 @@ int					ft_screenshot(t_vars *vars);
 void				start_music(t_vars *vars);
 void				exit_error(char *str);
 int					check_colour(t_vars *vars);
+void				init_colours(t_vars *vars);
 
 #endif

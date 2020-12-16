@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 11:32:36 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/14 14:15:27 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/15 14:04:02 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		check_text(t_vars *vars, char *str, int type)
 	if (!ft_isascii(str[i]))
 		return (0);
 	save_path(vars, type, &str[i]);
-
 	return (0);
 }
 

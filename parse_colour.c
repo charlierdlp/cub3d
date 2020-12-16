@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 11:36:32 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/14 14:28:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/15 14:02:54 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int				is_colour(t_vars *vars, char *str)
 	&& vars->texture.sky[1] != -1 && vars->texture.sky[2] != -1)) ||
 	(differ == 'F' && (vars->texture.floor[0] != -1
 	&& vars->texture.floor[1] != -1 && vars->texture.floor[2] != -1)))
-			exit_error("Error\nDouble sky/floor?\n");
+		exit_error("Error\nDouble sky/floor?\n");
 	fill(vars, &str[i], differ, 0);
 	find_comma(str, &i);
 	fill(vars, &str[i], differ, 1);

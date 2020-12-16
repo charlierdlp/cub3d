@@ -6,11 +6,21 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 11:59:35 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/02 11:56:49 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/16 11:42:28 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+void	init_colours(t_vars *vars)
+{
+	vars->texture.sky[0] = -1;
+	vars->texture.sky[1] = -1;
+	vars->texture.sky[2] = -1;
+	vars->texture.floor[0] = -1;
+	vars->texture.floor[1] = -1;
+	vars->texture.floor[2] = -1;
+}
 
 t_dda	dda_coor(int x0, int y0, int x1, int y1)
 {

@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/29 12:53:18 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/11 12:30:11 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/16 12:00:35 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void			perimeter_check2(t_vars *vars)
 	{
 		if (vars->map.map[y][0] == 'M'
 		|| vars->map.map[y][ft_strlen(vars->map.map[i]) - 1] == 'M'
-		|| vars->map.map[y][0] == '2'
-		|| vars->map.map[y][ft_strlen(vars->map.map[i]) - 1] == '2')
+		|| vars->map.map[y][0] == 'D'
+		|| vars->map.map[y][ft_strlen(vars->map.map[i]) - 1] == 'D')
 		{
 			write(1, "Error\nOpen Map", 15);
 			exit(0);
@@ -88,8 +88,8 @@ void			perimeter_check1(t_vars *vars)
 	{
 		if (vars->map.map[0][x] == 'M'
 		|| vars->map.map[vars->map.height - 1][x] == 'M'
-		|| vars->map.map[0][x] == '2'
-		|| vars->map.map[vars->map.height - 1][x] == '2')
+		|| vars->map.map[0][x] == 'D'
+		|| vars->map.map[vars->map.height - 1][x] == 'D')
 		{
 			write(1, "Error\nOpen Map", 15);
 			exit(0);

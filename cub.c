@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 10:31:29 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/14 13:45:33 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:53:09 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,7 @@ void	init_vars(t_vars *vars)
 	vars->parser.height = 0;
 	vars->map.start = 0;
 	vars->screenshot = 0;
-	vars->texture.sky[0] = -1;
-	vars->texture.sky[1] = -1;
-	vars->texture.sky[2] = -1;
-	vars->texture.floor[0] = -1;
-	vars->texture.floor[1] = -1;
-	vars->texture.floor[2] = -1;
+	init_colours(vars);
 }
 
 void	mlx_hooks(t_vars *vars)

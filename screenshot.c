@@ -6,7 +6,7 @@
 /*   By: cruiz-de <cruiz-de@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:16:31 by cruiz-de          #+#    #+#             */
-/*   Updated: 2020/12/08 11:49:05 by cruiz-de         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:59:45 by cruiz-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		print_img(t_vars *vars, int fd)
 	int	i;
 	int	j;
 
-	j = 0;
 	i = vars->parser.height - 1;
 	while (i >= 0)
 	{
@@ -33,7 +32,7 @@ int		print_img(t_vars *vars, int fd)
 		while (j < vars->parser.width)
 		{
 			if (write(fd, &(((unsigned int *)vars->data.addr)
-			[i * vars->parser.height + j]), 3) == -1)
+			[i * vars->parser.width + j]), 3) == -1)
 				return (0);
 			j++;
 		}
