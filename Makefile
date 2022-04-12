@@ -1,4 +1,4 @@
-SRCS        = cub.c raycast.c raycast_utils.c movement.c textures.c press_release.c sprites.c sprites_utils.c check_start.c parse_resolution.c parse_colour.c parse_map.c parse_map_utils.c parse_textures.c screenshot.c ./gnl/get_next_line.c music.c
+SRCS        = srcs/cub.c srcs/raycast.c srcs/raycast_utils.c srcs/movement.c srcs/textures.c srcs/press_release.c srcs/sprites.c srcs/sprites_utils.c srcs/check_start.c srcs/parse_resolution.c srcs/parse_colour.c srcs/parse_map.c srcs/parse_map_utils.c srcs/parse_textures.c srcs/screenshot.c ./gnl/get_next_line.c srcs/music.c
 OBJS        = ${SRCS:.c=.o}
 NAME        = cub3D
 CC          = cc
